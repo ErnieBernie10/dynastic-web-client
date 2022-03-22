@@ -52,4 +52,4 @@ jobs:
           app-name: 'dynastic-client'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4861751BE8664380A57E98D7C0443BF4 }}
-          package: .
+          package: ./dist
