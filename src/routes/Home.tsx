@@ -1,18 +1,22 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { Button, Container } from "@chakra-ui/react";
-import React from "react";
-import { useCurrentUser } from "../api/hooks";
+import { useGetDynasties } from "../api/hooks/queries/useDynasties";
+import { auth0Client } from "../App";
+import { useAuth0Client } from "../common/hooks/useAuth0Client";
 
 export const Home = () => {
-  const { loginWithRedirect, user, isAuthenticated } = useAuth0();
-  const { data } = useCurrentUser();
-  console.log(user, data);
+
+  const { isAuthenticated, authenticatedUser, auth0Client } = useAuth0Client();
+
+  const { data, error } = useGetDynasties();
+
+  console.log(data, error);
+
   return (
     <Container>
       {!isAuthenticated ? (
-        <Button onClick={loginWithRedirect}>Login</Button>
+        <Button onClick={() => auth0Client.loginWithRedirect()}>Login</Button>
       ) : (
-        user?.email
+        authenticatedUser?.name
       )}
     </Container>
   );
