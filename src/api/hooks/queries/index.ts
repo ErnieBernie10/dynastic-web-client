@@ -1,1 +1,3 @@
-export * from "./user/useCurrentUser";
+export * from "./useGetDynasties";
+export * from "./useGetDynasty";
+export * from "./useGetPeopleFromDynasty";

@@ -1,12 +1,17 @@
-import { User } from "@auth0/auth0-spa-js";
-import { useState, useEffect, useContext } from "react";
+import { Auth0Client, User } from "@auth0/auth0-spa-js";
+import { useState, useEffect, useContext, createContext } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { Auth0Context } from "../context/Auth0ClientContext";
 
 export const useAuth0Client = () => {
-  const [user, setUser] = useState<User>();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
+  const { pathname, search } = useLocation();
+  const navigate = useNavigate();
 
-  const { auth0Client } = useContext(Auth0Context);
+  const {
+    auth0Client,
+    isAuthenticated: [isAuthenticated, setIsAuthenticated],
+    authenticatedUser: [user, setUser],
+  } = useContext(Auth0Context);
 
   if (!auth0Client)
     throw Error(
@@ -14,17 +19,27 @@ export const useAuth0Client = () => {
     );
 
   useEffect(() => {
-    auth0Client
-      .handleRedirectCallback()
-      .then(() =>
-        auth0Client
-          .isAuthenticated()
-          .then((response) => setIsAuthenticated(response))
+    if (search.includes("code")) {
+      auth0Client.handleRedirectCallback().then(() =>
+        auth0Client.isAuthenticated().then((response) => {
+          setIsAuthenticated(response);
+          navigate(pathname);
+        })
       );
-  }, []);
+    } else {
+      auth0Client.getTokenSilently().then((_) =>
+        auth0Client.getUser().then((user) => {
+          setUser?.(user);
+          setIsAuthenticated(true);
+        })
+      );
+    }
+  }, [search]);
 
   useEffect(() => {
-    auth0Client.getUser().then((response) => setUser(response));
+    if (!user) {
+      auth0Client.getUser().then((response) => setUser?.(response));
+    }
   }, [isAuthenticated]);
 
   return {

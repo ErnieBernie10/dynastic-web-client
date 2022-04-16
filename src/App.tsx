@@ -1,10 +1,11 @@
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
+import { IntlProvider } from "react-intl";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Auth0ClientContextProvider } from "./common/context/Auth0ClientContext";
-import { Home } from "./routes/Home";
+import { Routes } from "./routes/Routes";
 
 const queryClient = new QueryClient();
 
@@ -17,16 +18,16 @@ export const auth0Client = await createAuth0Client({
 
 export const App: React.FC = () => {
   return (
-    <ChakraProvider>
-      <Auth0ClientContextProvider auth0Client={auth0Client}>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </BrowserRouter>
-        </QueryClientProvider>
-      </Auth0ClientContextProvider>
-    </ChakraProvider>
+    <IntlProvider locale="en">
+      <ChakraProvider>
+        <Auth0ClientContextProvider auth0Client={auth0Client}>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <Routes />
+            </BrowserRouter>
+          </QueryClientProvider>
+        </Auth0ClientContextProvider>
+      </ChakraProvider>
+    </IntlProvider>
   );
 };

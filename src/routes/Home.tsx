@@ -1,23 +1,13 @@
-import { Button, Container } from "@chakra-ui/react";
-import { useGetDynasties } from "../api/hooks/queries/useDynasties";
-import { auth0Client } from "../App";
-import { useAuth0Client } from "../common/hooks/useAuth0Client";
+import { useAuth0Client } from "@common/hooks";
+import { Layout } from "@common/ui";
+import { DashboardContainer } from "../features/dashboard/containers/DashboardContainer";
 
 export const Home = () => {
-
-  const { isAuthenticated, authenticatedUser, auth0Client } = useAuth0Client();
-
-  const { data, error } = useGetDynasties();
-
-  console.log(data, error);
+  const { isAuthenticated } = useAuth0Client();
 
   return (
-    <Container>
-      {!isAuthenticated ? (
-        <Button onClick={() => auth0Client.loginWithRedirect()}>Login</Button>
-      ) : (
-        authenticatedUser?.name
-      )}
-    </Container>
+    <Layout>
+      {isAuthenticated ? <DashboardContainer /> : "Show landing page"}
+    </Layout>
   );
 };
