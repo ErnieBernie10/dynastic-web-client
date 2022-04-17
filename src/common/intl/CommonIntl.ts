@@ -23,6 +23,6 @@ export const CommonIntl = defineMessages({
   },
   nl: {
     id: "nl",
-    defaultMessage: "Dutch",
+    defaultMessage: "Nederlands",
   },
 });
