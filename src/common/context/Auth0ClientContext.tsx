@@ -1,5 +1,5 @@
 import { Auth0Client, User } from "@auth0/auth0-spa-js";
-import React, { createContext, FC, useState } from "react";
+import React, { createContext, FC, PropsWithChildren, useState } from "react";
 
 interface Auth0ClientContextData {
   auth0Client: Auth0Client;
@@ -16,7 +16,7 @@ interface Auth0ClientContextProviderProps {
   auth0Client: Auth0Client;
 }
 export const Auth0ClientContextProvider: FC<
-  Auth0ClientContextProviderProps
+  PropsWithChildren<Auth0ClientContextProviderProps>
 > = ({ auth0Client, children }) => {
   const authenticatedUser = useState<User>();
   const isAuthenticated = useState<boolean>(false);
