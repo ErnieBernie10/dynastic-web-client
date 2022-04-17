@@ -1,5 +1,6 @@
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { ChakraProvider } from "@chakra-ui/react";
+import { CustomIntlProvider } from "@common/context/CustomIntlProvider";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -18,7 +19,7 @@ export const auth0Client = await createAuth0Client({
 
 export const App: React.FC = () => {
   return (
-    <IntlProvider locale="en">
+    <CustomIntlProvider>
       <ChakraProvider>
         <Auth0ClientContextProvider auth0Client={auth0Client}>
           <QueryClientProvider client={queryClient}>
@@ -28,6 +29,6 @@ export const App: React.FC = () => {
           </QueryClientProvider>
         </Auth0ClientContextProvider>
       </ChakraProvider>
-    </IntlProvider>
+    </CustomIntlProvider>
   );
 };

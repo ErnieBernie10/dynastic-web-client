@@ -1,19 +1,22 @@
 import {
   Flex,
   Link,
-  SelectField,
+  Select,
   Switch,
   useColorMode,
 } from "@chakra-ui/react";
 import { CommonIntl } from "../../intl/CommonIntl";
-import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth0Client } from "@common/hooks";
+import { useContext } from "react";
+import { IntlContext } from "@common/context/CustomIntlProvider";
+import { useIntl } from "react-intl";
 
 export const Navbar = () => {
   const { auth0Client, isAuthenticated } = useAuth0Client();
   const { colorMode, toggleColorMode } = useColorMode();
   const { formatMessage } = useIntl();
+  const [locale, setLocale] = useContext(IntlContext);
 
   return (
     <Flex p={5} justifyContent="space-between">
@@ -23,10 +26,10 @@ export const Navbar = () => {
         </Link>
       </Flex>
       <Flex justifyContent="end">
-        {/* <SelectField value={locale} onChange={(e) => setLocale(e.target.value)}>
-          <option value="en">{CommonIntl.en}</option>
-          <option value="nl">{CommonIntl.nl}</option>
-        </SelectField> */}
+        <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+          <option value="en">{formatMessage(CommonIntl.en)}</option>
+          <option value="nl">{formatMessage(CommonIntl.nl)}</option>
+        </Select>
         {isAuthenticated ? (
           <Link
             mr={8}
