@@ -1,10 +1,12 @@
-import { IntlErrorCode } from "@formatjs/intl";
-import React, { createContext, FC, PropsWithChildren, useState } from "react";
-import { IntlProvider } from "react-intl";
-import nl from "@lang/nl.json";
+import { IntlErrorCode } from '@formatjs/intl';
+import React, {
+  createContext, FC, PropsWithChildren, useState,
+} from 'react';
+import { IntlProvider } from 'react-intl';
+import nl from '@lang/nl.json';
 
 export const IntlContext = createContext<[string, (locale: string) => void]>([
-  "en",
+  'en',
   (locale: string) => {},
 ]);
 
@@ -13,7 +15,7 @@ const messages = {
 } as Record<string, Record<string, string>>;
 
 export const CustomIntlProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [locale, setLocale] = useState("en");
+  const [locale, setLocale] = useState('en');
   return (
     <IntlContext.Provider value={[locale, setLocale]}>
       <IntlProvider

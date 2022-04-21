@@ -1,5 +1,7 @@
-import { Auth0Client, User } from "@auth0/auth0-spa-js";
-import React, { createContext, FC, PropsWithChildren, useState } from "react";
+import { Auth0Client, User } from '@auth0/auth0-spa-js';
+import React, {
+  createContext, FC, PropsWithChildren, useState,
+} from 'react';
 
 interface Auth0ClientContextData {
   auth0Client: Auth0Client;

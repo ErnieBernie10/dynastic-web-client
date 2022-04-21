@@ -4,15 +4,15 @@ import {
   Select,
   Switch,
   useColorMode,
-} from "@chakra-ui/react";
-import { CommonIntl } from "../../intl/CommonIntl";
-import { Link as RouterLink } from "react-router-dom";
-import { useAuth0Client } from "@common/hooks";
-import { useContext } from "react";
-import { IntlContext } from "@common/context/CustomIntlProvider";
-import { useIntl } from "react-intl";
+} from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useAuth0Client } from '@common/hooks';
+import { useContext } from 'react';
+import { IntlContext } from '@common/context/CustomIntlProvider';
+import { useIntl } from 'react-intl';
+import { CommonIntl } from '../../intl/CommonIntl';
 
-export const Navbar = () => {
+export function Navbar() {
   const { auth0Client, isAuthenticated } = useAuth0Client();
   const { colorMode, toggleColorMode } = useColorMode();
   const { formatMessage } = useIntl();
@@ -33,9 +33,7 @@ export const Navbar = () => {
         {isAuthenticated ? (
           <Link
             mr={8}
-            onClick={() =>
-              auth0Client.logout({ returnTo: window.location.origin })
-            }
+            onClick={() => auth0Client.logout({ returnTo: window.location.origin })}
           >
             {formatMessage(CommonIntl.logout)}
           </Link>
@@ -48,9 +46,9 @@ export const Navbar = () => {
         <Switch
           colorScheme="green"
           onChange={toggleColorMode}
-          isChecked={colorMode === "dark"}
+          isChecked={colorMode === 'dark'}
         />
       </Flex>
     </Flex>
   );
-};
+}

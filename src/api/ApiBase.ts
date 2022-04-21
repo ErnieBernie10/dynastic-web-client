@@ -1,4 +1,4 @@
-import { auth0Client } from "../App";
+import { auth0Client } from '../App';
 
 export class Config {
   constructor(getBearerToken: () => Promise<string>) {
@@ -28,11 +28,11 @@ export class ApiBase {
 
     customOptions.headers = {
       ...options.headers,
-      "Access-Control-Allow-Origin": "*",
+      'Access-Control-Allow-Origin': '*',
       ...authHeader,
     };
 
-    if (options.body === undefined && options.method !== "GET") {
+    if (options.body === undefined && options.method !== 'GET') {
       customOptions.body = JSON.stringify({});
     }
 

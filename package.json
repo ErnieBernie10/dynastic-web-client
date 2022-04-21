@@ -6,6 +6,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "lint": "eslint ./src/**/* --no-error-on-unmatched-pattern ",
     "nswag:generate": "nswag run"
   },
   "dependencies": {
@@ -21,12 +22,22 @@
     "react-query": "^4.0.0-beta.3",
     "react-router": "^6.2.2",
     "react-router-dom": "^6.2.2",
+    "vite-plugin-eslint": "^1.4.0",
     "yarn": "^1.22.18"
   },
   "devDependencies": {
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
     "@vitejs/plugin-react": "^1.0.7",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
     "vite-tsconfig-paths": "^3.4.1"

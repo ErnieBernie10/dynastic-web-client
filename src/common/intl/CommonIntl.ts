@@ -1,28 +1,28 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export const CommonIntl = defineMessages({
   home: {
-    id: "home",
-    defaultMessage: "Home",
+    id: 'home',
+    defaultMessage: 'Home',
   },
   logout: {
-    id: "logout",
-    defaultMessage: "Logout",
+    id: 'logout',
+    defaultMessage: 'Logout',
   },
   login: {
-    id: "login",
-    defaultMessage: "Login"
+    id: 'login',
+    defaultMessage: 'Login',
   },
   darkMode: {
-    id: "darkMode",
-    defaultMessage: "Dark mode",
+    id: 'darkMode',
+    defaultMessage: 'Dark mode',
   },
   en: {
-    id: "en",
-    defaultMessage: "English",
+    id: 'en',
+    defaultMessage: 'English',
   },
   nl: {
-    id: "nl",
-    defaultMessage: "Nederlands",
+    id: 'nl',
+    defaultMessage: 'Nederlands',
   },
 });

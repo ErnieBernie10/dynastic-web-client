@@ -1,2 +1,1 @@
-import { ApiBase } from "./ApiBase";
-import { Config } from "./ApiBase";
+import { ApiBase, Config } from './ApiBase';

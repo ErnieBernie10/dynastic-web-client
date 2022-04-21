@@ -1,6 +1,6 @@
-import { useAuth0Client } from "@common/hooks";
-import React from "react";
-import { Navigate, Route, RouteProps } from "react-router";
+import { useAuth0Client } from '@common/hooks';
+import React from 'react';
+import { Navigate, Route, RouteProps } from 'react-router';
 
 export const ProtectedRoute: React.FC<
   RouteProps & { shouldShowError?: boolean }
