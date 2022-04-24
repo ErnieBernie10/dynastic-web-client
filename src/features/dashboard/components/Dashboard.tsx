@@ -1,5 +1,6 @@
+import { ListDynastiesContainer } from '@features/list-dynasties';
 import React from 'react';
 
-export function Dashboard() {
-  return <>Dashboard</>;
-}
+export const Dashboard = () => {
+  return <ListDynastiesContainer />;
+};

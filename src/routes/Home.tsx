@@ -1,7 +1,6 @@
 import { useAuth0Client } from '@common/hooks';
 import { Layout } from '@common/ui';
-
-import { DashboardContainer } from '../features/dashboard/containers/DashboardContainer';
+import { DashboardContainer } from '@features/dashboard';
 
 export function Home() {
   const { isAuthenticated } = useAuth0Client();

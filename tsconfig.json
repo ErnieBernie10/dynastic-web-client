@@ -4,7 +4,7 @@
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -15,11 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src",
+    "types": ["vite/client"],
     "paths": {
-      "@common/*": ["common/*"],
-      "@api/*": ["api/*"],
-      "@lang/*": ["../lang/*"]
+      "@common/*": ["./src/common/*"],
+      "@api/*": ["./src/api/*"],
+      "@lang/*": ["./lang/*"],
+      "@features/*": ["./src/features/*"]
     }
   },
   "include": ["src"],
