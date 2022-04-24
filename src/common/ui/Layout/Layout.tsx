@@ -7,7 +7,9 @@ export const Layout: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <>
       <Navbar />
-      <Container>{children}</Container>
+      <Container as="main" minW="80%">
+        {children}
+      </Container>
     </>
   );
 };

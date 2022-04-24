@@ -1,4 +1,13 @@
-import { Box, Button, Flex, Link, Select, Switch, useColorMode } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Link,
+  Select,
+  Switch,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
 import { IntlContext } from '@common/context/CustomIntlProvider';
 import { useAuth0Client } from '@common/hooks';
 import { useContext } from 'react';
@@ -45,14 +54,14 @@ export function Navbar() {
             </Button>
           )}
         </Box>
-        <Box mr={8}>
-          {formatMessage(CommonIntl.darkMode)}
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text mr={2}>{formatMessage(CommonIntl.darkMode)}</Text>
           <Switch
             colorScheme="green"
             onChange={toggleColorMode}
             isChecked={colorMode === 'dark'}
           />
-        </Box>
+        </Flex>
       </Flex>
     </Flex>
   );
