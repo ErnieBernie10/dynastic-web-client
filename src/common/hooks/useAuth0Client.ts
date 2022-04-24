@@ -1,8 +1,6 @@
-import { Auth0Client, User } from '@auth0/auth0-spa-js';
-import {
-  useState, useEffect, useContext, createContext,
-} from 'react';
+import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+
 import { Auth0Context } from '../context/Auth0ClientContext';
 
 export const useAuth0Client = () => {
@@ -16,22 +14,24 @@ export const useAuth0Client = () => {
   } = useContext(Auth0Context);
 
   if (!auth0Client) {
-    throw Error(
-      'auth0 must be present in context when using useAuth0Client hook',
-    );
+    throw Error('auth0 must be present in context when using useAuth0Client hook');
   }
 
   useEffect(() => {
     if (search.includes('code')) {
-      auth0Client.handleRedirectCallback().then(() => auth0Client.isAuthenticated().then((response) => {
-        setIsAuthenticated(response);
-        navigate(pathname);
-      }));
+      auth0Client.handleRedirectCallback().then(() =>
+        auth0Client.isAuthenticated().then((response) => {
+          setIsAuthenticated(response);
+          navigate(pathname);
+        }),
+      );
     } else {
-      auth0Client.getTokenSilently().then((_) => auth0Client.getUser().then((user) => {
-        setUser?.(user);
-        setIsAuthenticated(true);
-      }));
+      auth0Client.getTokenSilently().then(() =>
+        auth0Client.getUser().then((user) => {
+          setUser?.(user);
+          setIsAuthenticated(true);
+        }),
+      );
     }
   }, [search]);
 

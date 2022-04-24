@@ -1,15 +1,10 @@
-import {
-  Flex,
-  Link,
-  Select,
-  Switch,
-  useColorMode,
-} from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Box, Button, Flex, Link, Select, Switch, useColorMode } from '@chakra-ui/react';
+import { IntlContext } from '@common/context/CustomIntlProvider';
 import { useAuth0Client } from '@common/hooks';
 import { useContext } from 'react';
-import { IntlContext } from '@common/context/CustomIntlProvider';
 import { useIntl } from 'react-intl';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { CommonIntl } from '../../intl/CommonIntl';
 
 export function Navbar() {
@@ -20,34 +15,44 @@ export function Navbar() {
 
   return (
     <Flex p={5} justifyContent="space-between">
-      <Flex>
+      <Flex width="50%">
         <Link as={RouterLink} to="/">
           {formatMessage(CommonIntl.home)}
         </Link>
       </Flex>
-      <Flex justifyContent="end">
-        <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
-          <option value="en">{formatMessage(CommonIntl.en)}</option>
-          <option value="nl">{formatMessage(CommonIntl.nl)}</option>
-        </Select>
-        {isAuthenticated ? (
-          <Link
-            mr={8}
-            onClick={() => auth0Client.logout({ returnTo: window.location.origin })}
-          >
-            {formatMessage(CommonIntl.logout)}
-          </Link>
-        ) : (
-          <Link mr={8} onClick={() => auth0Client.loginWithRedirect()}>
-            {formatMessage(CommonIntl.login)}
-          </Link>
-        )}
-        {formatMessage(CommonIntl.darkMode)}
-        <Switch
-          colorScheme="green"
-          onChange={toggleColorMode}
-          isChecked={colorMode === 'dark'}
-        />
+      <Flex justifyContent="end" width="50%">
+        <Box mr={8}>
+          <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+            <option value="en">{formatMessage(CommonIntl.en)}</option>
+            <option value="nl">{formatMessage(CommonIntl.nl)}</option>
+          </Select>
+        </Box>
+        <Box mr={8}>
+          {isAuthenticated ? (
+            <Button
+              mr={8}
+              onClick={() => auth0Client.logout({ returnTo: window.location.origin })}
+            >
+              {formatMessage(CommonIntl.logout)}
+            </Button>
+          ) : (
+            <Button
+              mr={8}
+              colorScheme="green"
+              onClick={() => auth0Client.loginWithRedirect()}
+            >
+              {formatMessage(CommonIntl.login)}
+            </Button>
+          )}
+        </Box>
+        <Box mr={8}>
+          {formatMessage(CommonIntl.darkMode)}
+          <Switch
+            colorScheme="green"
+            onChange={toggleColorMode}
+            isChecked={colorMode === 'dark'}
+          />
+        </Box>
       </Flex>
     </Flex>
   );

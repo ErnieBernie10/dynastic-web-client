@@ -7,9 +7,7 @@
   "paths": {
     "/api/Dynasty": {
       "get": {
-        "tags": [
-          "Dynasty"
-        ],
+        "tags": ["Dynasty"],
         "parameters": [
           {
             "name": "request",
@@ -58,14 +56,12 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       },
       "post": {
-        "tags": [
-          "Dynasty"
-        ],
+        "tags": ["Dynasty"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -118,16 +114,14 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
     },
     "/api/Dynasty/{Id}": {
       "get": {
-        "tags": [
-          "Dynasty"
-        ],
+        "tags": ["Dynasty"],
         "parameters": [
           {
             "name": "Id",
@@ -169,16 +163,14 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
     },
     "/api/Dynasty/{id}": {
       "put": {
-        "tags": [
-          "Dynasty"
-        ],
+        "tags": ["Dynasty"],
         "parameters": [
           {
             "name": "id",
@@ -222,14 +214,12 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Dynasty"
-        ],
+        "tags": ["Dynasty"],
         "parameters": [
           {
             "name": "id",
@@ -254,16 +244,14 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
     },
     "/api/Dynasty/{DynastyId}/Person": {
       "get": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "parameters": [
           {
             "name": "DynastyId",
@@ -314,14 +302,12 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       },
       "post": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "parameters": [
           {
             "name": "DynastyId",
@@ -364,16 +350,14 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
     },
     "/api/Dynasty/{DynastyId}/Person/{id}": {
       "get": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "parameters": [
           {
             "name": "id",
@@ -423,14 +407,12 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       },
       "put": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "parameters": [
           {
             "name": "id",
@@ -482,14 +464,12 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "parameters": [
           {
             "name": "id",
@@ -522,16 +502,14 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
     },
     "/api/WeatherForecast": {
       "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
+        "tags": ["WeatherForecast"],
         "operationId": "GetWeatherForecast",
         "parameters": [
           {
@@ -581,7 +559,7 @@
         },
         "security": [
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }

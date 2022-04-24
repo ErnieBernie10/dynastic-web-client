@@ -1,12 +1,12 @@
-import createAuth0Client from "@auth0/auth0-spa-js";
-import { ChakraProvider } from "@chakra-ui/react";
-import { CustomIntlProvider } from "@common/context/CustomIntlProvider";
-import React from "react";
-import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter } from "react-router-dom";
-import { Auth0ClientContextProvider } from "./common/context/Auth0ClientContext";
-import { Routes } from "./routes/Routes";
+import createAuth0Client from '@auth0/auth0-spa-js';
+import { ChakraProvider } from '@chakra-ui/react';
+import { CustomIntlProvider } from '@common/context/CustomIntlProvider';
+import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
+
+import { Auth0ClientContextProvider } from './common/context/Auth0ClientContext';
+import { Routes } from './routes/Routes';
 
 const queryClient = new QueryClient();
 
