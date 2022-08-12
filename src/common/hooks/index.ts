@@ -1,1 +1,1 @@
-export * from "./useAuth0Client";
+export * from './useAuth0Client';

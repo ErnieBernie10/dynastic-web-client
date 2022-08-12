@@ -1,2 +1,4 @@
-import { ApiBase } from "./ApiBase";
-import { Config } from "./ApiBase";
+/* eslint-disable no-unused-vars */
+// noinspection ES6UnusedImports
+
+import { ApiBase, Config } from './ApiBase';

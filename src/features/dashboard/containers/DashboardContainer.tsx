@@ -1,11 +1,7 @@
-import { useGetDynasties } from "@api/hooks"
-import React from "react"
-import { Dashboard } from "../components/Dashboard"
+import React from 'react';
 
-export const DashboardContainer = () => {
-  const { data } = useGetDynasties();
+import { Dashboard } from '../components/Dashboard';
 
-  console.log(data);
-
-  return <Dashboard />
+export function DashboardContainer() {
+  return <Dashboard />;
 }
