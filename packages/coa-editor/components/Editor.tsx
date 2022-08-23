@@ -1,13 +1,10 @@
 import * as React from "react";
 import { createStyles } from "@mantine/core";
-import { ReactNode } from "react";
-import { CoaProvider } from "../context/CoaContext";
+import { CoaProvider, CoaProviderProps } from "../context/CoaContext";
 import { LeftControls } from "./LeftControls";
-import {Canvas} from "./Canvas";
+import { Canvas } from "./Canvas";
 
-interface EditorProps<T extends string> {
-  frames: Record<T, ReactNode>;
-}
+interface EditorProps extends CoaProviderProps {}
 
 const useStyles = createStyles(() => ({
   container: {
@@ -28,6 +25,7 @@ const useStyles = createStyles(() => ({
   content: {
     gridArea: "content",
     width: "100%",
+    height: 800,
     display: "flex",
     justifyContent: "center",
   },
@@ -41,23 +39,16 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export const Editor = <T extends string>({ frames }: EditorProps<T>) => {
+export const Editor = ({ frames, emblems }: EditorProps) => {
   const { classes } = useStyles();
   return (
-    <CoaProvider frames={frames}>
+    <CoaProvider frames={frames} emblems={emblems}>
       <div className={classes.container}>
         <div className={classes.leftControls}>
           <LeftControls />
         </div>
         <div className={classes.content}>
-          <div
-            style={{
-              height: 800,
-              width: "100%",
-            }}
-          >
-            <Canvas />
-          </div>
+          <Canvas />
         </div>
         <div className={classes.rightControls} />
       </div>

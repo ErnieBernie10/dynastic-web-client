@@ -1,11 +1,31 @@
 import { ActionIcon, ActionIconProps, createStyles } from "@mantine/core";
 import * as React from "react";
-import { FunctionComponent, ReactNode } from "react";
+import {ElementType, FunctionComponent} from "react";
 
 export interface ControlButtonProps extends ActionIconProps {
-  icon: ReactNode;
+  icon: ElementType | string;
   onClick: () => void;
 }
+
+export const ControlButton: FunctionComponent<ControlButtonProps> = ({
+  icon,
+  className,
+  ...rest
+}) => {
+  const { classes, cx } = useStyles();
+  const Icon = icon;
+  return (
+    <ActionIcon
+      variant="filled"
+      size={64}
+      color="primary"
+      {...rest}
+      className={cx(classes.actionIcon, className)}
+    >
+      <Icon />
+    </ActionIcon>
+  );
+};
 
 const useStyles = createStyles(() => ({
   actionIcon: {
@@ -17,21 +37,3 @@ const useStyles = createStyles(() => ({
     padding: 8,
   },
 }));
-
-export const ControlButton: FunctionComponent<ControlButtonProps> = ({
-  icon,
-  ...rest
-}) => {
-  const { classes } = useStyles();
-  return (
-    <ActionIcon
-      variant="filled"
-      size={64}
-      color="primary"
-      {...rest}
-      className={classes.actionIcon}
-    >
-      {icon}
-    </ActionIcon>
-  );
-};

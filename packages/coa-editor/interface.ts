@@ -1,15 +1,26 @@
+import { ElementType } from "react";
 
-export interface Pos {
-  x: number;
-  y: number;
-}
+type Pos = "left" | "right" | "top-left" | "top-right" | "center" | "bottom-left" | "bottom-right";
 
 export interface Section {
-  src: string;
+  element: ElementType | string;
   pos: Pos;
+  scale: number;
 }
 
 export interface CoaConfiguration {
   frame?: string;
   sections?: Section[];
 }
+
+export interface FrameMeta {
+  icon: ElementType | string;
+  sectionCount: number;
+}
+
+export interface EmblemMeta {
+  icon: ElementType | string;
+}
+
+export type FramesRecord = Record<string, FrameMeta>;
+export type EmblemsRecord = Record<string, EmblemMeta>;

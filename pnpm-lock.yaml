@@ -17,6 +17,7 @@ specifiers:
   '@remix-run/react': ^1.6.7
   '@remix-run/serve': ^1.6.7
   '@remix-run/vercel': ^1.6.7
+  '@svgdotjs/svg.js': ^3.1.2
   '@tabler/icons': ^1.78.1
   '@types/auth0': ^2.35.3
   '@types/i18next-fs-backend': ^1.1.2
@@ -53,6 +54,7 @@ specifiers:
   react-spring: ^9.5.2
   remix-esbuild-override: ^3.0.4
   remix-i18next: ^4.1.1
+  svgjs: ^2.6.2
   typescript: ^4.7.4
   zod: ^3.17.10
 
@@ -70,6 +72,7 @@ dependencies:
   '@remix-run/node': 1.6.7_sfoxds7t5ydpegc3knd667wn6m
   '@remix-run/react': 1.6.7_sfoxds7t5ydpegc3knd667wn6m
   '@remix-run/vercel': 1.6.7_ilrzp63bsi6yq3gj6wyabdzbsy
+  '@svgdotjs/svg.js': 3.1.2
   '@tabler/icons': 1.78.1_sfoxds7t5ydpegc3knd667wn6m
   '@types/auth0': 2.35.3
   '@vercel/node': 2.5.3
@@ -87,6 +90,7 @@ dependencies:
   react-i18next: 11.18.3_4bcptp673aptsea4uz6tljt4ci
   react-spring: 9.5.2_sfoxds7t5ydpegc3knd667wn6m
   remix-i18next: 4.1.1_zyzp7yclaij3icevguqj23rdve
+  svgjs: 2.6.2
   zod: 3.17.10
 
 devDependencies:
@@ -2294,6 +2298,10 @@ packages:
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
     dev: true
+
+  /@svgdotjs/svg.js/3.1.2:
+    resolution: {integrity: sha512-0ZCWTiuRjCXT2SUoVDiu+8DLuRQlkxZbO680Y2QkV7jNsULzJajrx6A3MxA/IBQg6UGV5csgPZ8w7U57hZSK+A==}
+    dev: false
 
   /@svgr/babel-plugin-add-jsx-attribute/6.3.1_@babel+core@7.18.10:
     resolution: {integrity: sha512-jDBKArXYO1u0B1dmd2Nf8Oy6aTF5vLDfLoO9Oon/GLkqZ/NiggYWZA+a2HpUMH4ITwNqS3z43k8LWApB8S583w==}
@@ -8630,6 +8638,10 @@ packages:
   /svg-parser/2.0.4:
     resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
     dev: true
+
+  /svgjs/2.6.2:
+    resolution: {integrity: sha512-a3NylwECLFeA5Nbd2SAE8ewKZ3nd1v1XbXPXDHNOg5ifpuAbABrv5GaiebhZRR/R6J3Flsk7L8xpFATATefw6Q==}
+    dev: false
 
   /swap-case/1.1.2:
     resolution: {integrity: sha512-BAmWG6/bx8syfc6qXPprof3Mn5vQgf5dwdUNJhsNqU9WdPt5P+ES/wQ5bxfijy8zwZgZZHslC3iAsxsuQMCzJQ==}
