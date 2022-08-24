@@ -1,11 +1,14 @@
 import React, {
   createContext,
   PropsWithChildren,
+  RefCallback,
   useContext,
   useMemo,
   useState,
 } from "react";
+import { Svg } from "@svgdotjs/svg.js";
 import { CoaConfiguration, EmblemsRecord, FramesRecord } from "../interface";
+import { useSvgJs } from "../hooks/useSvgJs";
 
 interface ICoaContext {
   // eslint-disable-next-line no-unused-vars
@@ -15,6 +18,8 @@ interface ICoaContext {
   frames: FramesRecord;
   emblems: EmblemsRecord;
   configuration: CoaConfiguration;
+  svg?: Svg;
+  ref: RefCallback<HTMLElement> | null;
 }
 
 export interface CoaProviderProps {
@@ -30,19 +35,11 @@ export const defaultCoa: ICoaContext = {
   frames: {},
   emblems: {},
   configuration: {},
+  svg: undefined,
+  ref: null,
 };
 
 const CoaContext = createContext<ICoaContext>(defaultCoa);
-
-const resizeArrTo = <T,>(length: number, arr: T[], factory: () => T): T[] =>
-  length > arr.length
-    ? [
-        ...arr,
-        ...Array(length - arr.length)
-          .fill(null)
-          .map(factory),
-      ]
-    : arr.slice(0, arr.length - (arr.length - length));
 
 export const useCoa = () => useContext(CoaContext);
 
@@ -54,6 +51,7 @@ export const CoaProvider = ({
   const [configuration, setConfiguration] = useState<CoaConfiguration>(
     defaultCoa.configuration
   );
+  const { ref, svg } = useSvgJs();
 
   const setFrame = (key: string) =>
     setConfiguration((prev) => ({
@@ -65,7 +63,7 @@ export const CoaProvider = ({
     setConfiguration((prev) => {
       const newSections = [...(prev.sections ?? [])];
       newSections[index] = {
-        element: emblems[key].icon,
+        emblemKey: key,
       };
       return {
         ...prev,
@@ -80,6 +78,8 @@ export const CoaProvider = ({
       setFrame,
       setEmblem,
       configuration,
+      ref,
+      svg,
     }),
     [setFrame, configuration]
   );

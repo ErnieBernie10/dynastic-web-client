@@ -5,7 +5,7 @@ import { useCoa } from "../context/CoaContext";
 import { FrameSelector } from "./FrameSelector";
 import { EmblemsSelector } from "./EmblemsSelector";
 
-export const LeftControls: FunctionComponent = () => {
+export const LeftConfigurationControls: FunctionComponent = () => {
   const {
     setFrame,
     setEmblem,
@@ -29,7 +29,6 @@ export const LeftControls: FunctionComponent = () => {
       <EmblemsSelector
         emblems={emblems}
         onSelectEmblem={handleSelectEmblem}
-        sectionsCount={frame ? frames[frame].sectionCount : 0}
       />
     </Box>
   );

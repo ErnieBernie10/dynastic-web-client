@@ -6,13 +6,11 @@ interface EmblemSelectorProps {
   emblems: EmblemsRecord;
   // eslint-disable-next-line no-unused-vars
   onSelectEmblem: (key: string, sectionIndex: number) => void;
-  sectionsCount: number;
 }
 
 export const EmblemsSelector: FunctionComponent<EmblemSelectorProps> = ({
   emblems,
   onSelectEmblem,
-  sectionsCount,
 }) => (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>

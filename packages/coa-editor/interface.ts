@@ -3,9 +3,10 @@ import { ElementType } from "react";
 type Pos = "left" | "right" | "top-left" | "top-right" | "center" | "bottom-left" | "bottom-right";
 
 export interface Section {
-  element: ElementType | string;
-  pos: Pos;
-  scale: number;
+  emblemKey: string;
+  // TODO: Implement
+  // pos: Pos;
+  // scale: number;
 }
 
 export interface CoaConfiguration {

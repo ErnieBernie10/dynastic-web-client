@@ -1,10 +1,15 @@
 import * as React from "react";
 import { createStyles } from "@mantine/core";
 import { CoaProvider, CoaProviderProps } from "../context/CoaContext";
-import { LeftControls } from "./LeftControls";
+import { LeftConfigurationControls } from "./LeftConfigurationControls";
 import { Canvas } from "./Canvas";
+import {FinalizationControls} from "./FinalizationControls";
+import {CoaConfiguration} from "../interface";
 
-interface EditorProps extends CoaProviderProps {}
+interface EditorProps extends CoaProviderProps {
+  // eslint-disable-next-line no-unused-vars
+  onExport: (svgBlob: Blob, configuration: CoaConfiguration) => void;
+}
 
 const useStyles = createStyles(() => ({
   container: {
@@ -16,7 +21,7 @@ const useStyles = createStyles(() => ({
       "left-controls content right-controls"
       "left-controls content right-controls"
       "left-controls content right-controls"
-      ". . ."`,
+      "bottom-controls bottom-controls bottom-controls"`,
     height: "100%",
     marginLeft: 80,
     justifyContent: "center",
@@ -37,20 +42,31 @@ const useStyles = createStyles(() => ({
     gridArea: "right-controls",
     height: "100%",
   },
+  bottomControls: {
+    gridArea: "bottom-controls",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
 }));
 
-export const Editor = ({ frames, emblems }: EditorProps) => {
+export const Editor = ({ frames, emblems, onExport }: EditorProps) => {
   const { classes } = useStyles();
+
   return (
     <CoaProvider frames={frames} emblems={emblems}>
       <div className={classes.container}>
         <div className={classes.leftControls}>
-          <LeftControls />
+          <LeftConfigurationControls />
         </div>
         <div className={classes.content}>
           <Canvas />
         </div>
         <div className={classes.rightControls} />
+        <div className={classes.bottomControls}>
+          <FinalizationControls onExport={onExport} />
+        </div>
       </div>
     </CoaProvider>
   );

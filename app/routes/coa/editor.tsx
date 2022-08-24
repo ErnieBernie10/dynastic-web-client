@@ -57,7 +57,13 @@ const EditorPage: FunctionComponent<EditorProps> = () => (
         <NavbarLink label="Settings" icon={IconSettings} to="/settings" />
       }
     />
-    <Editor frames={FramesMap} emblems={EmblemsMap} />
+    <Editor
+      frames={FramesMap}
+      emblems={EmblemsMap}
+      onExport={async (svgBlob, configuration) => {
+        console.log(svgBlob, await svgBlob.text(), configuration);
+      }}
+    />
   </main>
 );
 
