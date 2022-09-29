@@ -1,1 +1,1 @@
-export * from "./AppNavbar";
+export * from "./Shell";

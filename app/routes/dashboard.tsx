@@ -16,13 +16,10 @@ import { getDynasties } from "~/data-access/dynasty/queries.server";
 import { createDynasty } from "~/data-access/dynasty/mutations.server";
 import { MainLayout } from "~/layouts/MainLayout";
 import { Dynasty } from "~/data-access/schemas";
-import { DynastyCard } from "~/features/list-dynasties-feature";
-import { Button, Grid } from "@mantine/core";
-import { IconPlus, IconSocial } from "@tabler/icons";
-import { CreateDynastyDrawer } from "~/features/create-dynasty-feature";
-import { useDisclosure } from "@mantine/hooks";
-import { useAppTranslation } from "~/util/hooks";
 import { z } from "zod";
+import { isEmpty } from "lodash";
+import { DynastiesDashboardContainer } from "~/features/dynasties-dashboard-feature";
+import { NoDynastiesDashboardContainer } from "~/features/no-dynasties-dashboard-feature";
 
 type LoaderData = {
   dynasties: Dynasty[];
@@ -63,31 +60,14 @@ export const action: ActionFunction = async ({ request }) => {
 
 const Dashboard: FunctionComponent = () => {
   const { dynasties } = useLoaderData<LoaderData>();
-  const [opened, handlers] = useDisclosure(false);
-  const { t } = useAppTranslation();
 
   return (
     <MainLayout>
-      <Grid>
-        <Grid.Col>
-          <Button.Group>
-            <Button leftIcon={<IconPlus />} onClick={handlers.open}>
-              {t("dashboard.create")}
-            </Button>
-            <Button rightIcon={<IconSocial />} variant="outline">
-              {t("dashboard.join")}
-            </Button>
-          </Button.Group>
-        </Grid.Col>
-      </Grid>
-      <Grid>
-        {dynasties.map((dynasty) => (
-          <Grid.Col key={dynasty.id}>
-            <DynastyCard dynasty={dynasty} />
-          </Grid.Col>
-        ))}
-      </Grid>
-      <CreateDynastyDrawer opened={opened} onClose={handlers.close} />
+      {!isEmpty(dynasties.length) ? (
+        <DynastiesDashboardContainer />
+      ) : (
+        <NoDynastiesDashboardContainer />
+      )}
     </MainLayout>
   );
 };

@@ -3,6 +3,18 @@
   "common.submit": "Submit",
   "home.description": "Your dynastic history and future",
   "home.join": "Join your dynasty",
-  "dashboard.create": "Create",
-  "dashboard.join": "Join"
+  "common.or": "Or",
+  "dashboard.create.title": "Create a Dynasty",
+  "dashboard.create.button": "Let's go",
+  "dashboard.create.description": "Create your Dynasty’s coat of arms and keep track of your family’s achievements and memories through the years.",
+  "dashboard.join.title": "Join a Dynasty",
+  "dashboard.join.description": "Join a Dynasty of a relative and add your achievements and memories to the family timeline.",
+  "dashboard.join.inviteCode": "Enter invite code",
+  "dashboard.join.search": "Search a Dynasty",
+  "createDynasty.step1.label": "Dynasty info",
+  "createDynasty.step1.description": "What is your Dynasty's name and moto",
+  "createDynasty.step2.label": "Coat of arms",
+  "createDynasty.step2.description": "Design your Dynasty's coat of arms",
+  "createDynasty.step3.label": "Review",
+  "createDynasty.step3.description": "Review your new Dynasty"
 }

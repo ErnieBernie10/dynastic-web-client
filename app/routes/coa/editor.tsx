@@ -1,7 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { AppNavbar, NavbarLink } from "@ui/common";
-import { IconHome, IconSettings } from "@tabler/icons";
+import { MainLayout } from "~/layouts/MainLayout";
 import { Editor, EmblemMeta, FrameMeta } from "../../../packages/coa-editor";
 import {
   Basic,
@@ -50,13 +49,7 @@ export const EmblemsMap: Record<keyof typeof Emblems, EmblemMeta> = {
 };
 
 const EditorPage: FunctionComponent<EditorProps> = () => (
-  <main>
-    <AppNavbar
-      topSection={<NavbarLink label="Home" icon={IconHome} to="/dashboard" />}
-      bottomSection={
-        <NavbarLink label="Settings" icon={IconSettings} to="/settings" />
-      }
-    />
+  <MainLayout>
     <Editor
       frames={FramesMap}
       emblems={EmblemsMap}
@@ -64,7 +57,7 @@ const EditorPage: FunctionComponent<EditorProps> = () => (
         console.log(svgBlob, await svgBlob.text(), configuration);
       }}
     />
-  </main>
+  </MainLayout>
 );
 
 export default EditorPage;
