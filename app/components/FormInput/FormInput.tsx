@@ -21,6 +21,7 @@ interface FormInputProps extends InputProps {
   name: string;
   label: string;
   description?: string;
+  defaultValue?: string | undefined | null;
 }
 
 export const FormInput = ({
@@ -39,7 +40,7 @@ export const FormInput = ({
       // eslint-disable-next-line no-underscore-dangle
       error={<Errors errors={error?._errors as string[]} />}
     >
-      <Input {...rest} />
+      <Input name={name} {...rest} />
     </Input.Wrapper>
   );
 };

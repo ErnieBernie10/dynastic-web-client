@@ -8,7 +8,7 @@ export interface paths {
     get: {
       parameters: {
         query: {
-          request?: components["schemas"]["GetDynastiesForUserQuery"];
+          isFinished?: boolean;
         };
       };
       responses: {
@@ -70,6 +70,67 @@ export interface paths {
         401: unknown;
         /** If user not authorized to perform requested action */
         403: unknown;
+      };
+    };
+  };
+  "/api/Dynasty/{id}/UploadCoaFile": {
+    put: {
+      parameters: {
+        path: {
+          id: string;
+        };
+      };
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "multipart/form-data": {
+            /** Format: binary */
+            Coa?: string;
+          };
+        };
+      };
+    };
+  };
+  "/api/Dynasty/{id}/CoaConfiguration": {
+    put: {
+      parameters: {
+        path: {
+          id: string;
+        };
+      };
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["AddDynastyCoaConfigurationBody"];
+          "text/json": components["schemas"]["AddDynastyCoaConfigurationBody"];
+          "application/*+json": components["schemas"]["AddDynastyCoaConfigurationBody"];
+        };
       };
     };
   };
@@ -137,7 +198,7 @@ export interface paths {
     post: {
       parameters: {
         path: {
-          DynastyId: string;
+          dynastyId: string;
         };
       };
       responses: {
@@ -235,9 +296,13 @@ export interface paths {
 
 export interface components {
   schemas: {
+    AddDynastyCoaConfigurationBody: {
+      coaConfiguration?: unknown | null;
+    };
     AddDynastyCommand: {
       name?: string | null;
       description?: string | null;
+      motto?: string | null;
     };
     AddPersonToDynastyBody: {
       firstname: string;
@@ -250,6 +315,11 @@ export interface components {
       /** Format: uuid */
       fatherId?: string | null;
     };
+    /**
+     * Format: int32
+     * @enum {integer}
+     */
+    CreationStep: 0 | 1 | 2 | 3;
     Dynasty: {
       /** Format: uuid */
       id?: string;
@@ -259,11 +329,16 @@ export interface components {
       modifiedAt?: string;
       name?: string | null;
       description?: string | null;
+      motto?: string | null;
       members?: components["schemas"]["Person"][] | null;
-      crestImage?: string;
-      userId?: string | null;
+      creationStep?: components["schemas"]["CreationStep"];
+      ownershipProperties?: components["schemas"]["DynastyOwnershipProperties"];
+      coaConfiguration?: unknown | null;
     };
-    GetDynastiesForUserQuery: { [key: string]: unknown };
+    DynastyOwnershipProperties: {
+      ownerUserId?: string | null;
+      members?: string[] | null;
+    };
     GetWeatherForecastsQuery: { [key: string]: unknown };
     Person: {
       /** Format: uuid */
