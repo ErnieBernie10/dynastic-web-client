@@ -12,7 +12,7 @@ import {
 import { secondaryColor } from "~/util/fn/colorLevels";
 import { useAppTranslation } from "~/util/hooks";
 import { IconArrowRight, IconSearch, IconSocial } from "@tabler/icons";
-import {Link} from "@remix-run/react";
+import { Link } from "@remix-run/react";
 
 interface NoDynastiesDashboardContainerProps {}
 
@@ -51,7 +51,11 @@ export const NoDynastiesDashboardContainer: FunctionComponent<
                 justifyContent: "flex-end",
               }}
             >
-              <Button component={Link} to="/dynasty/create" rightIcon={<IconArrowRight />}>
+              <Button
+                component={Link}
+                to="/dynasty/create"
+                rightIcon={<IconArrowRight />}
+              >
                 {t("dashboard.create.button")}
               </Button>
             </Box>
@@ -101,6 +105,6 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "column",
-    padding: "16px 35px 16px 35px"
+    padding: "16px 35px 16px 35px",
   },
 }));

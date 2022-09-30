@@ -21,13 +21,13 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const { accessToken } = await authorize(request);
   const { data: dynasties } = await getUserDynasties(
-    {},
+    { isFinished: false },
     withToken(accessToken)
   );
 
   // Step 3 is Finalized step.
   // TODO: Make generated schema store value in some accessible constant
-  const hasUnfinishedDynasty = !dynasties.some(
+  const hasUnfinishedDynasty = !isEmpty(dynasties) && dynasties.some(
     (dynasty) => (dynasty.creationStep as number) < 3
   );
 

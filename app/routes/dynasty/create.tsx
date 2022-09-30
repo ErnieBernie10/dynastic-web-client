@@ -14,11 +14,14 @@ import {
   withToken,
 } from "~/services/auth.server";
 import { getUserDynasties } from "~/data-access/dynasty/queries.server";
-import { createDynasty } from "~/data-access/dynasty/mutations.server";
+import {
+  createDynasty,
+  updateDynasty,
+} from "~/data-access/dynasty/mutations.server";
 import { z } from "zod";
-import {Dynasty} from "~/data-access/schemas";
-import {first, isEmpty} from "lodash";
-import {useLoaderData} from "@remix-run/react";
+import { Dynasty } from "~/data-access/schemas";
+import { first, isEmpty } from "lodash";
+import { useLoaderData } from "@remix-run/react";
 
 interface CreateProps {}
 
@@ -45,9 +48,28 @@ export const action: ActionFunction = async ({ request }) => {
   if (!validated.success) {
     return json(validated.error.format());
   }
-  const response = await createDynasty(validated.data, withToken(accessToken));
-  // TODO: Make more generic
-  if (!response.ok) throw json({ errors: ["request failed"] });
+
+  const queryParams = new URLSearchParams(request.url.split("?")[1]);
+
+  const existingDynastyId = queryParams.get("id");
+
+  if (existingDynastyId) {
+    const response = await updateDynasty(
+      {
+        ...validated.data,
+        id: existingDynastyId,
+      },
+      withToken(accessToken)
+    );
+    if (!response.ok) throw json({ errors: ["request failed"] });
+  } else {
+    const response = await createDynasty(
+      validated.data,
+      withToken(accessToken)
+    );
+    // TODO: Make more generic
+    if (!response.ok) throw json({ errors: ["request failed"] });
+  }
 
   return redirect("/dynasty/create", await withSessionFromRequest(request));
 };
@@ -63,7 +85,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     withToken(accessToken)
   );
 
-  if (isEmpty(dynasties)) {
+  const hasUnfinishedDynasty = dynasties.some(
+    (dynasty) => (dynasty.creationStep as number) < 3
+  );
+
+  if (!hasUnfinishedDynasty && !isEmpty(dynasties)) {
     return redirect("/dashboard", await withSessionFromRequest(request));
   }
   return json({ dynasty: first(dynasties) });

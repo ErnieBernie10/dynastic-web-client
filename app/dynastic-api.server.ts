@@ -138,12 +138,18 @@ export interface paths {
     put: {
       parameters: {
         path: {
-          id: number;
+          id: string;
         };
       };
       responses: {
         /** Success */
-        200: unknown;
+        200: {
+          content: {
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
+          };
+        };
         /** If Authorization header not present, has no value or no valid jwt bearer token */
         401: unknown;
         /** If user not authorized to perform requested action */
@@ -151,9 +157,9 @@ export interface paths {
       };
       requestBody: {
         content: {
-          "application/json": string;
-          "text/json": string;
-          "application/*+json": string;
+          "application/json": components["schemas"]["UpdateDynastyCommandBody"];
+          "text/json": components["schemas"]["UpdateDynastyCommandBody"];
+          "application/*+json": components["schemas"]["UpdateDynastyCommandBody"];
         };
       };
     };
@@ -361,6 +367,11 @@ export interface components {
       /** Format: uuid */
       partnerId?: string | null;
       children?: string[] | null;
+    };
+    UpdateDynastyCommandBody: {
+      name?: string | null;
+      description?: string | null;
+      motto?: string | null;
     };
     WeatherForecast: {
       /** Format: date-time */
