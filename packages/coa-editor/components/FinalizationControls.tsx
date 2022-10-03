@@ -6,7 +6,7 @@ import { CoaConfiguration } from "../interface";
 
 interface FinalizationControlsProps {
   // eslint-disable-next-line no-unused-vars
-  onExport: (svgBlob: Blob, configuration: CoaConfiguration) => void;
+  onExport: (svgBlob: File, configuration: CoaConfiguration) => void;
 }
 
 export const FinalizationControls: FunctionComponent<
@@ -16,7 +16,10 @@ export const FinalizationControls: FunctionComponent<
 
   const handleDone = () => {
     if (svg) {
-      onExport(new Blob([svg.svg()], { type: "image/svg+xml" }), configuration);
+      onExport(
+        new File([svg.svg()], "Coa", { type: "image/svg+xml" }),
+        configuration
+      );
     }
   };
 

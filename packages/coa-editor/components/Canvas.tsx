@@ -26,10 +26,10 @@ export const Canvas: FunctionComponent<CanvasProps> = () => {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: "400px",
         height: "100%",
         "> svg": {
-          width: "100%",
+          width: "400px",
           height: "100%",
         },
       }}

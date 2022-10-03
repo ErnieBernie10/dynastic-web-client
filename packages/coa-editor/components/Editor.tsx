@@ -3,12 +3,12 @@ import { createStyles } from "@mantine/core";
 import { CoaProvider, CoaProviderProps } from "../context/CoaContext";
 import { LeftConfigurationControls } from "./LeftConfigurationControls";
 import { Canvas } from "./Canvas";
-import {FinalizationControls} from "./FinalizationControls";
-import {CoaConfiguration} from "../interface";
+import { FinalizationControls } from "./FinalizationControls";
+import { CoaConfiguration } from "../interface";
 
 interface EditorProps extends CoaProviderProps {
   // eslint-disable-next-line no-unused-vars
-  onExport: (svgBlob: Blob, configuration: CoaConfiguration) => void;
+  onExport: (svgBlob: File, configuration: CoaConfiguration) => void;
 }
 
 const useStyles = createStyles(() => ({
@@ -17,12 +17,12 @@ const useStyles = createStyles(() => ({
     gridTemplateColumns: "1fr 3fr 1fr",
     gridTemplateRows: "1fr 1fr 1fr 1fr 1fr",
     gap: "0px 0px",
-    gridTemplateAreas: `". . ."
+    gridTemplateAreas: `"left-controls . right-controls"
       "left-controls content right-controls"
       "left-controls content right-controls"
       "left-controls content right-controls"
       "bottom-controls bottom-controls bottom-controls"`,
-    height: "100%",
+    height: "700px",
     marginLeft: 80,
     justifyContent: "center",
     alignItems: "center",
@@ -30,7 +30,7 @@ const useStyles = createStyles(() => ({
   content: {
     gridArea: "content",
     width: "100%",
-    height: 800,
+    height: 400,
     display: "flex",
     justifyContent: "center",
   },

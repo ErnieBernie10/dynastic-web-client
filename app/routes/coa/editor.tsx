@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { MainLayout } from "~/layouts/MainLayout";
-import { Editor, EmblemMeta, FrameMeta } from "../../../packages/coa-editor";
+import { Editor, EmblemMeta, FrameMeta } from "@coa-editor/index";
 import {
   Basic,
   BasicXLine,

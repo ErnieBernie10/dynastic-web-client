@@ -4,6 +4,7 @@ import { Stepper } from "@mantine/core";
 import { useAppTranslation } from "~/util/hooks";
 import { Dynasty } from "~/data-access/schemas";
 import { isNil } from "lodash";
+import { DynastyCoaStepContainer } from "./DynastyCoaStepContainer";
 import { DynastyInfoStepContainer } from "./DynastyInfoStepContainer";
 
 interface CreateDynastyContainerProps {
@@ -39,7 +40,7 @@ export const CreateDynastyContainer: FunctionComponent<
         description={t("createDynasty.step2.description")}
         allowStepSelect={active > 1}
       >
-        Step 2 content: Verify email
+        <DynastyCoaStepContainer dynasty={dynasty} />
       </Stepper.Step>
       <Stepper.Step
         label={t("createDynasty.step3.label")}

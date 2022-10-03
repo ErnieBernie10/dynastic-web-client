@@ -14,61 +14,33 @@ import {
   withToken,
 } from "~/services/auth.server";
 import { getUserDynasties } from "~/data-access/dynasty/queries.server";
-import {
-  createDynasty,
-  updateDynasty,
-} from "~/data-access/dynasty/mutations.server";
-import { z } from "zod";
-import { Dynasty } from "~/data-access/schemas";
+import { Dynasty, DynastyCreationStep } from "~/data-access/schemas";
 import { first, isEmpty } from "lodash";
 import { useLoaderData } from "@remix-run/react";
+import {
+  handleBasicInfoStep,
+  handleCoaStep,
+} from "~/services/create-dynasty.server";
 
 interface CreateProps {}
-
-const createDynastySchema = z.object({
-  name: z.string().trim().min(1),
-  description: z.string().trim().nullable(),
-  motto: z.string().trim().nullable(),
-});
 
 export const action: ActionFunction = async ({ request }) => {
   const { accessToken } = await authorize(request);
   const formData = await request.formData();
-  const name = formData.get("name");
-  const motto = formData.get("motto");
-  const description = formData.get("description");
-  const formValues = {
-    name: name as string,
-    description: description as string,
-    motto: motto as string,
-  };
-
-  const validated = createDynastySchema.safeParse(formValues);
-
-  if (!validated.success) {
-    return json(validated.error.format());
-  }
 
   const queryParams = new URLSearchParams(request.url.split("?")[1]);
 
   const existingDynastyId = queryParams.get("id");
 
-  if (existingDynastyId) {
-    const response = await updateDynasty(
-      {
-        ...validated.data,
-        id: existingDynastyId,
-      },
-      withToken(accessToken)
-    );
-    if (!response.ok) throw json({ errors: ["request failed"] });
-  } else {
-    const response = await createDynasty(
-      validated.data,
-      withToken(accessToken)
-    );
-    // TODO: Make more generic
-    if (!response.ok) throw json({ errors: ["request failed"] });
+  switch (Number(formData.get("action")) as DynastyCreationStep) {
+    case 0:
+      await handleBasicInfoStep(formData, accessToken, existingDynastyId);
+      break;
+    case 1:
+      await handleCoaStep(formData, accessToken, existingDynastyId);
+      break;
+    default:
+      break;
   }
 
   return redirect("/dynasty/create", await withSessionFromRequest(request));

@@ -15,6 +15,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "@ui/*": ["./packages/ui/*"],
+      "@coa-editor/*": ["./packages/coa-editor/*"],
       "@resources/*": ["./public/*"]
     },
 
