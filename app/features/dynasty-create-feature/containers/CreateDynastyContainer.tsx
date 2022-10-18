@@ -42,13 +42,6 @@ export const CreateDynastyContainer: FunctionComponent<
       >
         <DynastyCoaStepContainer dynasty={dynasty} />
       </Stepper.Step>
-      <Stepper.Step
-        label={t("createDynasty.step3.label")}
-        description={t("createDynasty.step3.description")}
-        allowStepSelect={active > 2}
-      >
-        Step 3 content: Get full access
-      </Stepper.Step>
       <Stepper.Completed>
         Completed, click back button to get to previous step
       </Stepper.Completed>

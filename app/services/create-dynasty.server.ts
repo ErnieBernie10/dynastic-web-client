@@ -9,10 +9,16 @@ import { json } from "@remix-run/node";
 import { withToken } from "~/services/auth.server";
 import { isNil } from "lodash";
 
+export const CreateDynastyFormFields = {
+  name: "name",
+  description: "description",
+  motto: "motto",
+} as const;
+
 const createDynastySchema = z.object({
-  name: z.string().trim().min(1),
-  description: z.string().trim().nullable(),
-  motto: z.string().trim().nullable(),
+  [CreateDynastyFormFields.name]: z.string().trim().min(1),
+  [CreateDynastyFormFields.description]: z.string().trim().nullable(),
+  [CreateDynastyFormFields.motto]: z.string().trim().nullable(),
 });
 
 export const handleBasicInfoStep = async (
@@ -20,9 +26,9 @@ export const handleBasicInfoStep = async (
   accessToken: string,
   existingDynastyId: string | undefined | null
 ) => {
-  const name = formData.get("name");
-  const motto = formData.get("motto");
-  const description = formData.get("description");
+  const name = formData.get(CreateDynastyFormFields.name);
+  const motto = formData.get(CreateDynastyFormFields.motto);
+  const description = formData.get(CreateDynastyFormFields.description);
   const formValues = {
     name: name as string,
     description: description as string,
@@ -32,7 +38,7 @@ export const handleBasicInfoStep = async (
   const validated = createDynastySchema.safeParse(formValues);
 
   if (!validated.success) {
-    throw json(validated.error.format());
+    return json(validated.error.format());
   }
 
   if (existingDynastyId) {
@@ -52,6 +58,8 @@ export const handleBasicInfoStep = async (
     // TODO: Make more generic
     if (!response.ok) throw json({ errors: ["request failed"] });
   }
+
+  return null;
 };
 
 const uploadCoaSchema = z.object({
@@ -77,17 +85,15 @@ export const handleCoaStep = async (
     throw json(validated.error.format());
   }
 
-  await Promise.all([
-    uploadCoaFile(
-      { id: existingDynastyId as string, Coa: validated.data.coa },
-      withToken(accessToken)
-    ),
-    uploadCoaConfiguration(
-      {
-        coaConfiguration: JSON.parse(validated.data.configuration),
-        id: existingDynastyId,
-      },
-      withToken(accessToken)
-    ),
-  ]);
+  await uploadCoaFile(
+    { id: existingDynastyId as string, Coa: validated.data.coa },
+    withToken(accessToken)
+  );
+  await uploadCoaConfiguration(
+    {
+      coaConfiguration: JSON.parse(validated.data.configuration),
+      id: existingDynastyId,
+    },
+    withToken(accessToken)
+  );
 };

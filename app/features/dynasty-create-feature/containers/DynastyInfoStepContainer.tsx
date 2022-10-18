@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { FormInput } from "~/components/FormInput";
 import { Form, useTransition } from "@remix-run/react";
 import { Group, Button } from "@mantine/core";
-import { Dynasty } from "~/data-access/schemas";
+import {Dynasty, DynastyCreationStep} from "~/data-access/schemas";
 
 interface DynastyInfoStepContainerProps {
   prevStep: () => void;
@@ -34,7 +34,7 @@ export const DynastyInfoStepContainer: FunctionComponent<
         <Button
           type="submit"
           name="action"
-          value="step1"
+          value={0 as DynastyCreationStep}
           loading={state === "loading" || state === "submitting"}
         >
           Next step

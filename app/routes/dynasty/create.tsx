@@ -15,7 +15,7 @@ import {
 } from "~/services/auth.server";
 import { getUserDynasties } from "~/data-access/dynasty/queries.server";
 import { Dynasty, DynastyCreationStep } from "~/data-access/schemas";
-import { first, isEmpty } from "lodash";
+import { first, isEmpty, isNil } from "lodash";
 import { useLoaderData } from "@remix-run/react";
 import {
   handleBasicInfoStep,
@@ -32,7 +32,11 @@ export const action: ActionFunction = async ({ request }) => {
 
   const existingDynastyId = queryParams.get("id");
 
-  switch (Number(formData.get("action")) as DynastyCreationStep) {
+  const step = formData.get("action");
+  if (isNil(step))
+    await handleBasicInfoStep(formData, accessToken, existingDynastyId);
+
+  switch (Number(step) as DynastyCreationStep) {
     case 0:
       await handleBasicInfoStep(formData, accessToken, existingDynastyId);
       break;
@@ -58,7 +62,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   );
 
   const hasUnfinishedDynasty = dynasties.some(
-    (dynasty) => (dynasty.creationStep as number) < 3
+    (dynasty) => (dynasty.creationStep as number) < 1
   );
 
   if (!hasUnfinishedDynasty && !isEmpty(dynasties)) {

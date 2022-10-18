@@ -15,9 +15,9 @@ export interface paths {
         /** Success */
         200: {
           content: {
-            "text/plain": components["schemas"]["Dynasty"][];
-            "application/json": components["schemas"]["Dynasty"][];
-            "text/json": components["schemas"]["Dynasty"][];
+            "text/plain": components["schemas"]["DynastyDto"][];
+            "application/json": components["schemas"]["DynastyDto"][];
+            "text/json": components["schemas"]["DynastyDto"][];
           };
         };
         /** If Authorization header not present, has no value or no valid jwt bearer token */
@@ -295,6 +295,47 @@ export interface paths {
       };
     };
   };
+  "/api/User": {
+    get: {
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["UserInfoDto"];
+            "application/json": components["schemas"]["UserInfoDto"];
+            "text/json": components["schemas"]["UserInfoDto"];
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+    };
+    post: {
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": boolean;
+            "application/json": boolean;
+            "text/json": boolean;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["CompleteSignupCommand"];
+          "text/json": components["schemas"]["CompleteSignupCommand"];
+          "application/*+json": components["schemas"]["CompleteSignupCommand"];
+        };
+      };
+    };
+  };
   "/api/WeatherForecast": {
     get: operations["GetWeatherForecast"];
   };
@@ -321,6 +362,13 @@ export interface components {
       /** Format: uuid */
       fatherId?: string | null;
     };
+    CompleteSignupCommand: {
+      firstname?: string | null;
+      middlename?: string | null;
+      lastname?: string | null;
+      /** Format: date-time */
+      birthDate?: string;
+    };
     /**
      * Format: int32
      * @enum {integer}
@@ -338,8 +386,24 @@ export interface components {
       motto?: string | null;
       members?: components["schemas"]["Person"][] | null;
       creationStep?: components["schemas"]["CreationStep"];
+      isPrimary?: boolean;
       ownershipProperties?: components["schemas"]["DynastyOwnershipProperties"];
       coaConfiguration?: unknown | null;
+    };
+    DynastyDto: {
+      /** Format: uuid */
+      id?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      modifiedAt?: string;
+      name?: string | null;
+      description?: string | null;
+      motto?: string | null;
+      members?: components["schemas"]["Person"][] | null;
+      creationStep?: components["schemas"]["CreationStep"];
+      isPrimary?: boolean;
+      coaPath?: string | null;
     };
     DynastyOwnershipProperties: {
       ownerUserId?: string | null;
@@ -349,6 +413,10 @@ export interface components {
     Person: {
       /** Format: uuid */
       id?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      modifiedAt?: string;
       firstname?: string | null;
       middlename?: string | null;
       lastname?: string | null;
@@ -372,6 +440,14 @@ export interface components {
       name?: string | null;
       description?: string | null;
       motto?: string | null;
+    };
+    UserInfoDto: {
+      userId?: string | null;
+      firstname?: string | null;
+      middlename?: string | null;
+      lastname?: string | null;
+      /** Format: date-time */
+      birthDate?: string;
     };
     WeatherForecast: {
       /** Format: date-time */

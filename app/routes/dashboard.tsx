@@ -25,15 +25,15 @@ export const loader: LoaderFunction = async ({ request }) => {
     withToken(accessToken)
   );
 
-  // Step 3 is Finalized step.
   // TODO: Make generated schema store value in some accessible constant
-  const hasUnfinishedDynasty = !isEmpty(dynasties) && dynasties.some(
-    (dynasty) => (dynasty.creationStep as number) < 3
-  );
+  const hasUnfinishedDynasty =
+    !isEmpty(dynasties) &&
+    dynasties.some((dynasty) => (dynasty.creationStep as number) < 1);
 
   if (hasUnfinishedDynasty) {
     return redirect("/dynasty/create", await withSessionFromRequest(request));
   }
+
   return json<LoaderData>({ dynasties });
 };
 
@@ -42,8 +42,8 @@ const Dashboard: FunctionComponent = () => {
 
   return (
     <MainLayout>
-      {!isEmpty(dynasties.length) ? (
-        <DynastiesDashboardContainer />
+      {!isEmpty(dynasties) ? (
+        <DynastiesDashboardContainer dynasties={dynasties} />
       ) : (
         <NoDynastiesDashboardContainer />
       )}

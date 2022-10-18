@@ -30,6 +30,13 @@ export const theme = (colorScheme: ColorScheme): MantineThemeOverride => ({
         },
       },
     },
+    Title: {
+      styles: {
+        root: {
+          fontWeight: 200,
+        },
+      },
+    },
   },
   colorScheme,
 });

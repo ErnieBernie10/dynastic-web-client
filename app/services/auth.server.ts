@@ -2,6 +2,7 @@
 import { json, redirect, Session, TypedResponse } from "@remix-run/node";
 import { AuthenticationClient } from "auth0";
 import { commitSession, getSession } from "~/sessions";
+import { getDynasticUserProfile } from "~/data-access/user/queries.server";
 
 export interface SessionUserInfo {
   userId: string;
@@ -37,20 +38,20 @@ export const withToken = (accessToken: string) => ({
 });
 
 const withSession = async (session: Session) => ({
-    // TODO: Make more secure in prod env
-    headers: {
-      "Set-Cookie": await commitSession(session),
-      "Same-Site": "None",
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-    },
-  });
+  // TODO: Make more secure in prod env
+  headers: {
+    "Set-Cookie": await commitSession(session),
+    "Same-Site": "None",
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "*",
+  },
+});
 
 export const withSessionFromRequest = async (req: Request) => {
   const session = await getSession(req.headers.get("Cookie"));
   return withSession(session);
-}
+};
 
 export const redirectAuth = (state: string, origin: string) => {
   const url = new URL(`https://${AUTH_0.domain}`);
@@ -92,6 +93,16 @@ export async function handleRedirect(request: Request) {
   session.set("access_token", response.access_token);
   session.set("email", userProfile.email);
   session.set("user_id", userProfile.sub);
+
+  try {
+    // TODO: Refactor to user response.ok. It shouldn't crash the whole app when 404 is received
+    await getDynasticUserProfile(
+      {},
+      withToken(response.access_token)
+    );
+  } catch {
+    return redirect("/signup/complete", await withSession(session));
+  }
 
   return redirect("/login", await withSession(session));
 }
