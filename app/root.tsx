@@ -19,10 +19,10 @@ import styles from "~/app.css";
 import { useColorScheme } from "@mantine/hooks";
 import { i18next } from "~/i18next.server";
 import { json } from "@remix-run/node";
-import { theme } from "./theme";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
 import { IS_CLIENT } from "~/constants";
+import { theme } from "./theme";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",

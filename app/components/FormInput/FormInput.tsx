@@ -1,14 +1,11 @@
 import * as React from "react";
-import { Input, InputProps } from "@mantine/core";
-import { useActionData } from "@remix-run/react";
-import { ZodFormattedError } from "zod";
-import { FormErrors } from "~/components/FormErrors/FormErrors";
+import { TextInput, TextInputProps } from "@mantine/core";
+import { useFormErrorBehavior } from "../../../packages/util/hooks/useFormErrorBehavior";
 
-interface FormInputProps extends InputProps {
+interface FormInputProps extends TextInputProps {
   name: string;
   label: string;
   description?: string;
-  defaultValue?: string | undefined | null;
 }
 
 export const FormInput = ({
@@ -17,20 +14,20 @@ export const FormInput = ({
   name,
   defaultValue,
   required,
+  onChange,
   ...rest
 }: FormInputProps) => {
-  const data = useActionData<ZodFormattedError<Record<string, unknown>>>();
-  const error = data?.[name];
+  const props = useFormErrorBehavior(name, onChange)
 
   return (
-    <Input.Wrapper
+    <TextInput
       label={label}
       description={description}
-      // eslint-disable-next-line no-underscore-dangle
-      error={<FormErrors errors={error?._errors as string[]} />}
       required={required}
-    >
-      <Input name={name} defaultValue={defaultValue ?? undefined} {...rest} />
-    </Input.Wrapper>
+      name={name}
+      defaultValue={defaultValue ?? undefined}
+      {...rest}
+      {...props}
+    />
   );
 };

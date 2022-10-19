@@ -34,20 +34,17 @@ export const action: ActionFunction = async ({ request }) => {
 
   const step = formData.get("action");
   if (isNil(step))
-    await handleBasicInfoStep(formData, accessToken, existingDynastyId);
+    return handleBasicInfoStep(formData, accessToken, existingDynastyId, request);
 
   switch (Number(step) as DynastyCreationStep) {
     case 0:
-      await handleBasicInfoStep(formData, accessToken, existingDynastyId);
-      break;
+      return handleBasicInfoStep(formData, accessToken, existingDynastyId, request);
     case 1:
-      await handleCoaStep(formData, accessToken, existingDynastyId);
-      break;
+      return handleCoaStep(formData, accessToken, existingDynastyId, request);
     default:
-      break;
+      return redirect("/dynasty/create", await withSessionFromRequest(request));
   }
 
-  return redirect("/dynasty/create", await withSessionFromRequest(request));
 };
 
 interface LoaderData {

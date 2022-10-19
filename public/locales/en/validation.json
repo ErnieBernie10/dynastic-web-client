@@ -1,0 +1,5 @@
+{
+  "errors": {
+    "min": "{{field}} cannot be empty"
+  }
+}

@@ -20,7 +20,7 @@ export const DynastyInfoStepContainer: FunctionComponent<
       method="post"
       action={`/dynasty/create?id=${dynasty?.id ? dynasty.id : ""}`}
     >
-      <FormInput name="name" label="Name" defaultValue={dynasty?.name} />
+      <FormInput name="name" label="Name" defaultValue={dynasty?.name} required />
       <FormInput name="motto" label="Motto" defaultValue={dynasty?.motto} />
       <FormInput
         name="description"

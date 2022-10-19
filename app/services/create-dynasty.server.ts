@@ -8,6 +8,7 @@ import {
 import { json } from "@remix-run/node";
 import { withToken } from "~/services/auth.server";
 import { isNil } from "lodash";
+import { getValidationIntl } from "~/util/fn/getValidationIntl";
 
 export const CreateDynastyFormFields = {
   name: "name",
@@ -15,17 +16,19 @@ export const CreateDynastyFormFields = {
   motto: "motto",
 } as const;
 
-const createDynastySchema = z.object({
-  [CreateDynastyFormFields.name]: z.string().trim().min(1),
-  [CreateDynastyFormFields.description]: z.string().trim().nullable(),
-  [CreateDynastyFormFields.motto]: z.string().trim().nullable(),
-});
-
 export const handleBasicInfoStep = async (
   formData: FormData,
   accessToken: string,
-  existingDynastyId: string | undefined | null
+  existingDynastyId: string | undefined | null,
+  request: Request,
 ) => {
+  const t = await getValidationIntl(request);
+  const createDynastySchema = z.object({
+    [CreateDynastyFormFields.name]: z.string().trim().min(1, { message: t("errors.min", { field: "Name"})}),
+    [CreateDynastyFormFields.description]: z.string().trim().nullable(),
+    [CreateDynastyFormFields.motto]: z.string().trim().nullable(),
+  });
+
   const name = formData.get(CreateDynastyFormFields.name);
   const motto = formData.get(CreateDynastyFormFields.motto);
   const description = formData.get(CreateDynastyFormFields.description);
@@ -70,7 +73,9 @@ const uploadCoaSchema = z.object({
 export const handleCoaStep = async (
   formData: FormData,
   accessToken: string,
-  existingDynastyId: string | undefined | null
+  existingDynastyId: string | undefined | null,
+  // eslint-disable-next-line no-unused-vars
+  request: Request
 ) => {
   if (isNil(existingDynastyId)) {
     return;
