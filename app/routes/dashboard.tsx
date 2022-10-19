@@ -9,17 +9,19 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import { getUserDynasties } from "~/data-access/dynasty/queries.server";
 import { MainLayout } from "~/layouts/MainLayout";
-import { Dynasty } from "~/data-access/schemas";
-import { isEmpty } from "lodash";
+import { Dynasty, Person } from "~/data-access/schemas";
+import { first, isEmpty } from "lodash";
 import { DynastiesDashboardContainer } from "~/features/dynasties-dashboard-feature";
 import { NoDynastiesDashboardContainer } from "~/features/no-dynasties-dashboard-feature";
 
 type LoaderData = {
   dynasties: Dynasty[];
+  userMember: Person | undefined;
+  primaryDynasty: Dynasty;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { accessToken } = await authorize(request);
+  const { accessToken, userId } = await authorize(request);
   const { data: dynasties } = await getUserDynasties(
     { isFinished: false },
     withToken(accessToken)
@@ -34,16 +36,24 @@ export const loader: LoaderFunction = async ({ request }) => {
     return redirect("/dynasty/create", await withSessionFromRequest(request));
   }
 
-  return json<LoaderData>({ dynasties });
+  // TODO: Replace this with proper logic once we support multiple dynasties
+  const primaryDynasty = first(dynasties) as Dynasty;
+
+  const userMember = primaryDynasty.members?.find((m) => m.owner === userId);
+
+  return json<LoaderData>({ dynasties, primaryDynasty, userMember });
 };
 
 const Dashboard: FunctionComponent = () => {
-  const { dynasties } = useLoaderData<LoaderData>();
+  const { dynasties, userMember, primaryDynasty } = useLoaderData<LoaderData>();
 
   return (
     <MainLayout>
       {!isEmpty(dynasties) ? (
-        <DynastiesDashboardContainer dynasties={dynasties} />
+        <DynastiesDashboardContainer
+          primaryDynasty={primaryDynasty}
+          userMember={userMember}
+        />
       ) : (
         <NoDynastiesDashboardContainer />
       )}

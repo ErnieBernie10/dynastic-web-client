@@ -1,22 +1,18 @@
 import * as React from "react";
-import {FunctionComponent, useEffect} from "react";
-import { Dynasty } from "~/data-access/schemas";
-import {Divider, Grid, Image, Text, Title} from "@mantine/core";
-import { first } from "lodash";
+import { FunctionComponent } from "react";
+import { Dynasty, Person } from "~/data-access/schemas";
+import { Divider, Grid, Text, Title } from "@mantine/core";
 import { CoaSvg } from "~/components/CoaSvg/CoaSvg";
-import {auth0} from "~/services/auth.server";
+import { getFullName } from "~/util/fn";
 
 interface DynastiesDashboardContainerProps {
-  dynasties: Dynasty[];
+  userMember: Person | undefined;
+  primaryDynasty: Dynasty;
 }
 
 export const DynastiesDashboardContainer: FunctionComponent<
   DynastiesDashboardContainerProps
-> = ({ dynasties }) => {
-  // TODO: Also implement view for other dynasties. R1 will only cover a single dynasty per user.
-  const primaryDynasty = first(dynasties);
-
-  return (
+> = ({ userMember, primaryDynasty }) => (
     <Grid>
       <Grid.Col span={3}>
         <CoaSvg size="lg" src={primaryDynasty?.coaPath ?? undefined} />
@@ -24,16 +20,17 @@ export const DynastiesDashboardContainer: FunctionComponent<
       <Grid.Col span={9}>
         <Title order={1}>
           House of{" "}
-          <Text weight={700} sx={{ display: "inline" }}>
+          <Text weight={700} component="span" sx={{ display: "inline" }}>
             {primaryDynasty?.name}
           </Text>
         </Title>
-        <Text weight={700} sx={{ display: "inline" }}>
+        <Text weight={700} component="span" sx={{ display: "inline" }}>
           {primaryDynasty?.members?.length}
         </Text>
         <Text sx={{ display: "inline" }}> Members</Text>
         <Divider />
+        <Text weight={700}>{getFullName(userMember)}</Text>
+        <Text>You</Text>
       </Grid.Col>
     </Grid>
   );
-};
