@@ -22,6 +22,7 @@ import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
 import { IS_CLIENT } from "~/constants";
+import { DrawerProvider } from "~/util/hooks";
 import { theme } from "./theme";
 
 export const meta: MetaFunction = () => ({
@@ -81,19 +82,21 @@ export default function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <html lang={locale} dir={i18n.dir()}>
-          <head>
-            <Meta />
-            <Links />
-            <StylesPlaceholder />
-          </head>
-          <body>
-            <Outlet />
-            <ScrollRestoration />
-            <Scripts />
-            <LiveReload />
-          </body>
-        </html>
+        <DrawerProvider>
+          <html lang={locale} dir={i18n.dir()}>
+            <head>
+              <Meta />
+              <Links />
+              <StylesPlaceholder />
+            </head>
+            <body>
+              <Outlet />
+              <ScrollRestoration />
+              <Scripts />
+              <LiveReload />
+            </body>
+          </html>
+        </DrawerProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

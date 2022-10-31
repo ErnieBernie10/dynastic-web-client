@@ -1,12 +1,16 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { Box, Button, ButtonProps, Text } from "@mantine/core";
+import { PolymorphicComponentProps } from "@mantine/utils";
 
-interface InfoButtonProps extends ButtonProps {
+type InfoButtonProps<C = "button"> = PolymorphicComponentProps<
+  C,
+  ButtonProps
+> & {
   width: number | string;
   label: string;
   description: string;
-}
+};
 
 export const InfoButton: FunctionComponent<InfoButtonProps> = ({
   width,

@@ -134,6 +134,36 @@ export interface paths {
       };
     };
   };
+  "/api/Dynasty/{id}/Relationships": {
+    post: {
+      parameters: {
+        path: {
+          id: string;
+        };
+      };
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["AddRelationshipBody"];
+          "text/json": components["schemas"]["AddRelationshipBody"];
+          "application/*+json": components["schemas"]["AddRelationshipBody"];
+        };
+      };
+    };
+  };
   "/api/Dynasty/{id}": {
     put: {
       parameters: {
@@ -179,11 +209,11 @@ export interface paths {
       };
     };
   };
-  "/api/Dynasty/{DynastyId}/Person": {
+  "/api/Dynasty/{dynastyId}/Person": {
     get: {
       parameters: {
         path: {
-          DynastyId: string;
+          dynastyId: string;
         };
       };
       responses: {
@@ -230,12 +260,12 @@ export interface paths {
       };
     };
   };
-  "/api/Dynasty/{DynastyId}/Person/{Id}": {
+  "/api/Dynasty/{dynastyId}/Person/{id}": {
     get: {
       parameters: {
         path: {
-          DynastyId: string;
-          Id: string;
+          dynastyId: string;
+          id: string;
         };
       };
       responses: {
@@ -253,13 +283,11 @@ export interface paths {
         403: unknown;
       };
     };
-  };
-  "/api/Dynasty/{DynastyId}/Person/{id}": {
     put: {
       parameters: {
         path: {
           id: number;
-          DynastyId: string;
+          dynastyId: string;
         };
       };
       responses: {
@@ -282,7 +310,7 @@ export interface paths {
       parameters: {
         path: {
           id: number;
-          DynastyId: string;
+          dynastyId: string;
         };
       };
       responses: {
@@ -362,6 +390,12 @@ export interface components {
       /** Format: uuid */
       fatherId?: string | null;
     };
+    AddRelationshipBody: {
+      /** Format: uuid */
+      personId?: string;
+      /** Format: uuid */
+      partnerId?: string;
+    };
     CompleteSignupCommand: {
       firstname?: string | null;
       middlename?: string | null;
@@ -385,6 +419,7 @@ export interface components {
       description?: string | null;
       motto?: string | null;
       members?: components["schemas"]["Person"][] | null;
+      relationships?: components["schemas"]["Relationship"][] | null;
       creationStep?: components["schemas"]["CreationStep"];
       isPrimary?: boolean;
       ownershipProperties?: components["schemas"]["DynastyOwnershipProperties"];
@@ -427,7 +462,6 @@ export interface components {
       /** Format: date-time */
       birthDate?: string | null;
       owner?: string | null;
-      relationships?: components["schemas"]["Relationship"][] | null;
     };
     Relationship: {
       /** Format: uuid */

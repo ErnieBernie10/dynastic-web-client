@@ -2,10 +2,10 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { Form } from "@remix-run/react";
 import { FormInput } from "~/components/FormInput";
-import { CompleteSignupFormFields } from "~/routes/signup/complete";
 import { Button, Text, Title } from "@mantine/core";
 import { FormDatePicker } from "~/components/FormDatePicker";
 import { useLoading } from "~/util/hooks/useLoading";
+import { CompleteSignupFormFields } from "~/services/formFields";
 
 interface CompleteSignupContainerProps {}
 
@@ -26,7 +26,7 @@ export const CompleteSignupContainer: FunctionComponent<
           required
         />
         <FormInput
-          name={CompleteSignupFormFields.middlename}
+          name={CompleteSignupFormFields.middleName}
           label="Middle name"
         />
         <FormInput
