@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { Dynasty, Person } from "~/data-access/schemas";
 import {
   Box,
@@ -19,7 +19,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { AddMemberForm } from "~/features/add-member-feature";
 import { useDrawer } from "~/util/hooks";
 import { useLoading } from "~/util/hooks/useLoading";
-import { useTransition } from "@remix-run/react";
+import { useTransitionEvent } from "~/util/hooks/useTransitionEvent";
 
 interface DynastiesDashboardContainerProps {
   userMember: Person | undefined;
@@ -37,13 +37,9 @@ export const DynastiesDashboardContainer: FunctionComponent<
   const { show, isOpen, close } = useDrawer();
 
   const loadingAddMember = useLoading();
-  const { type } = useTransition();
-
-  useEffect(() => {
-    if (type === "actionRedirect") {
-      close();
-    }
-  }, [type]);
+  useTransitionEvent({
+    onActionRedirect: () => close(),
+  });
 
   return (
     <>
