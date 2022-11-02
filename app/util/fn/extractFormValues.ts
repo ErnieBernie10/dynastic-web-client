@@ -1,3 +1,5 @@
+import { isEmpty } from "lodash";
+
 type FormDataEntryValue = string | File;
 
 export const extractFormValues = <T extends Record<string, unknown>>(
@@ -6,6 +8,7 @@ export const extractFormValues = <T extends Record<string, unknown>>(
 ): Record<keyof T, FormDataEntryValue> =>
   Object.keys(fields).reduce((prev, curr) => {
     const formValue = formData.get(curr);
+    if (isEmpty(formValue)) return prev;
     return {
       ...prev,
       [curr]: formValue,

@@ -1,24 +1,26 @@
 import { useActionData } from "@remix-run/react";
 import { ZodFormattedError } from "zod";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { first } from "lodash";
 
-export const useFormErrorBehavior = (
+export const useFormErrorBehavior = <T>(
   name: string,
-  onChange: ChangeEventHandler | undefined
+  // eslint-disable-next-line no-unused-vars
+  onChange: ((val: T) => void) | undefined
 ) => {
   const data = useActionData<ZodFormattedError<Record<string, unknown>>>();
   const error = data?.[name];
   const [changed, setChanged] = useState(false);
 
-  // eslint-disable-next-line no-underscore-dangle
-  const errors = error && !changed ? first(error?._errors as string[]) : undefined;
+  const errors =
+    // eslint-disable-next-line no-underscore-dangle
+    error && !changed ? first(error?._errors as string[]) : undefined;
 
   useEffect(() => {
     setChanged(false);
   }, [data]);
 
-  const handleOnChange = (e: ChangeEvent) => {
+  const handleOnChange = (e: T) => {
     setChanged(true);
     onChange?.(e);
   };

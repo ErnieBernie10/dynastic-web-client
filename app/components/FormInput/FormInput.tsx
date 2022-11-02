@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TextInput, TextInputProps } from "@mantine/core";
-import { useFormErrorBehavior } from "../../../packages/util/hooks/useFormErrorBehavior";
+import { useFormErrorBehavior } from "~/util/hooks";
 
 interface FormInputProps extends Omit<TextInputProps, "defaultValue"> {
   name: string;

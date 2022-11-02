@@ -17,6 +17,17 @@ export const theme = (colorScheme: ColorScheme): MantineThemeOverride => ({
       "#800020",
     ],
     cyan: ["#008060"],
+    // dark: [
+    //   "#e6e6e7",
+    //   "#9b999f",
+    //   "#828087",
+    //   "#69666e",
+    //   "#504d56",
+    //   "#37333e",
+    //   "#1e1a26",
+    //   "#05000E",
+    // ],
+    accentDark: ["#05000E"],
   },
   fontFamily: "Roboto Slab",
   headings: {
@@ -35,6 +46,23 @@ export const theme = (colorScheme: ColorScheme): MantineThemeOverride => ({
         root: {
           fontWeight: 200,
         },
+      },
+    },
+    Paper: {
+      defaultProps: {
+        radius: "lg",
+        shadow: "md",
+      },
+      styles: {
+        root: {
+          borderColor: "#800020",
+          borderWidth: 2,
+        },
+      },
+    },
+    Avatar: {
+      defaultProps: {
+        radius: "xl",
       },
     },
   },

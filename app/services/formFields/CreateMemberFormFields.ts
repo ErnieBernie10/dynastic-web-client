@@ -3,4 +3,6 @@ export const CreateMemberFormFields = {
   lastname: "lastname",
   middleName: "middleName",
   birthDate: "birthDate",
+  motherId: "motherId",
+  fatherId: "fatherId",
 } as const;

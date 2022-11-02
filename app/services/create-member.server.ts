@@ -8,7 +8,9 @@ import { withSessionFromRequest, withToken } from "~/services/auth.server";
 const createMemberSchema = z.object({
   [CreateMemberFormFields.firstname]: z.string().trim().min(1),
   [CreateMemberFormFields.lastname]: z.string().trim().min(1),
-  [CreateMemberFormFields.middleName]: z.string().trim().nullable(),
+  [CreateMemberFormFields.middleName]: z.string().trim().nullable().optional(),
+  [CreateMemberFormFields.fatherId]: z.string().nullable().optional(),
+  [CreateMemberFormFields.motherId]: z.string().nullable().optional(),
   [CreateMemberFormFields.birthDate]: z
     .string()
     .transform((dateString) => {

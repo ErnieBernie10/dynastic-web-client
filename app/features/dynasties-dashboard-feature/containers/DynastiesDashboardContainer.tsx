@@ -7,7 +7,10 @@ import {
   Divider,
   Drawer,
   Grid,
+  List,
+  Paper,
   Popover,
+  ScrollArea,
   Text,
   Title,
 } from "@mantine/core";
@@ -20,6 +23,7 @@ import { AddMemberForm } from "~/features/add-member-feature";
 import { useDrawer } from "~/util/hooks";
 import { useLoading } from "~/util/hooks/useLoading";
 import { useTransitionEvent } from "~/util/hooks/useTransitionEvent";
+import { PersonListItem } from "~/components/PersonListItem";
 
 interface DynastiesDashboardContainerProps {
   userMember: Person | undefined;
@@ -119,8 +123,25 @@ export const DynastiesDashboardContainer: FunctionComponent<
             </Grid.Col>
           </Grid>
           <Divider />
-          <Text weight={700}>{getFullName(userMember)}</Text>
-          <Text>You</Text>
+          <Grid>
+            <Grid.Col span={8}>
+              <Text weight={700}>{getFullName(userMember)}</Text>
+              <Text>You</Text>
+            </Grid.Col>
+            <Grid.Col span={4}>
+              <Paper p="4px 16px" mt={8} withBorder>
+                <List listStyleType="none" spacing={8}>
+                  <ScrollArea sx={{ height: 300 }}>
+                    {primaryDynasty.members?.map((member) => (
+                      <List.Item key={member.id}>
+                        <PersonListItem label={getFullName(member)} />
+                      </List.Item>
+                    ))}
+                  </ScrollArea>
+                </List>
+              </Paper>
+            </Grid.Col>
+          </Grid>
         </Grid.Col>
       </Grid>
     </>
