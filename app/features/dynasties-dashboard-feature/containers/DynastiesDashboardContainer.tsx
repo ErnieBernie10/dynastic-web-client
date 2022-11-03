@@ -129,8 +129,16 @@ export const DynastiesDashboardContainer: FunctionComponent<
               <Text>You</Text>
             </Grid.Col>
             <Grid.Col span={4}>
-              <Paper p="4px 16px" mt={8} withBorder>
-                <List listStyleType="none" spacing={8}>
+              <Paper p="8px" mt={8} withBorder>
+                <List
+                  listStyleType="none"
+                  spacing={8}
+                  styles={{
+                    itemWrapper: {
+                      display: "block",
+                    },
+                  }}
+                >
                   <ScrollArea sx={{ height: 300 }}>
                     {primaryDynasty.members?.map((member) => (
                       <List.Item key={member.id}>

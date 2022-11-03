@@ -15,6 +15,11 @@ export const addMember = fetcher
   .method("post")
   .create();
 
+export const updateMember = fetcher
+  .path("/api/Dynasty/{dynastyId}/Person/{id}")
+  .method("put")
+  .create();
+
 // TODO: Figure out why this isn't working and revert the work around
 // fetcher
 //   .path("/api/Dynasty/{id}/UploadCoaFile")

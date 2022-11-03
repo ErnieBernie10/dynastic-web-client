@@ -1,6 +1,7 @@
 import * as React from "react";
 import { forwardRef } from "react";
-import { Avatar, Text, Group } from "@mantine/core";
+import { Avatar, Text, Group, ActionIcon, Box, Card } from "@mantine/core";
+import { IconEdit } from "@tabler/icons";
 
 interface PersonListItemProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string;
@@ -9,15 +10,27 @@ interface PersonListItemProps extends React.ComponentPropsWithoutRef<"div"> {
 
 const PersonListItem = forwardRef<HTMLDivElement, PersonListItemProps>(
   ({ label, image, ...rest }, ref) => (
-    <div ref={ref} {...rest}>
+    <Card p={8} m={0} ref={ref} {...rest}>
       <Group noWrap>
         <Avatar src={image} size="lg" />
 
-        <div>
-          <Text size="sm">{label}</Text>
-        </div>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Text size="sm" sx={{ display: "flex", alignItems: "center  " }}>
+            {label}
+          </Text>
+
+          <ActionIcon>
+            <IconEdit />
+          </ActionIcon>
+        </Box>
       </Group>
-    </div>
+    </Card>
   )
 );
 

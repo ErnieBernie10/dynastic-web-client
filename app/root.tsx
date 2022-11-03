@@ -11,7 +11,7 @@ import {
 } from "@remix-run/react";
 import {
   ColorScheme,
-  ColorSchemeProvider,
+  ColorSchemeProvider, createEmotionCache,
   MantineProvider,
 } from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
@@ -30,6 +30,8 @@ export const meta: MetaFunction = () => ({
   title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
 });
+
+createEmotionCache({ key: 'mantine' });
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
@@ -86,9 +88,9 @@ export default function App() {
         <DrawerProvider>
           <html lang={locale} dir={i18n.dir()}>
             <head>
+              <StylesPlaceholder />
               <Meta />
               <Links />
-              <StylesPlaceholder />
             </head>
             <body>
               <Outlet />
