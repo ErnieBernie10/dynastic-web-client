@@ -1,7 +1,7 @@
 import { Fetcher } from "openapi-typescript-fetch";
 import { paths } from "~/dynastic-api.server";
 
-export const baseUrl = "https://localhost:7256";
+export const baseUrl = process.env.BASE_URL;
 
 const fetcher = Fetcher.for<paths>();
 
