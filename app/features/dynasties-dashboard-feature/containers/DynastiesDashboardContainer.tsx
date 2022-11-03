@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Dynasty, Person } from "~/data-access/schemas";
 import {
   Box,
@@ -19,7 +19,7 @@ import { getFullName } from "~/util/fn";
 import { IconUserPlus, IconUserSearch } from "@tabler/icons";
 import { InfoButton } from "@ui/common";
 import { useDisclosure } from "@mantine/hooks";
-import { AddMemberForm } from "~/features/add-member-feature";
+import { ModifyMemberDrawer } from "~/features/add-member-feature";
 import { useDrawer } from "~/util/hooks";
 import { useLoading } from "~/util/hooks/useLoading";
 import { useTransitionEvent } from "~/util/hooks/useTransitionEvent";
@@ -39,6 +39,7 @@ export const DynastiesDashboardContainer: FunctionComponent<
   ] = useDisclosure(false);
 
   const { show, isOpen, close } = useDrawer();
+  const [editingMember, setEditingMember] = useState<Person | null>(null);
 
   const loadingAddMember = useLoading();
   useTransitionEvent({
@@ -47,8 +48,19 @@ export const DynastiesDashboardContainer: FunctionComponent<
 
   return (
     <>
-      <Drawer opened={isOpen} onClose={close} size="xl">
-        <AddMemberForm isLoading={loadingAddMember} dynasty={primaryDynasty} />
+      <Drawer
+        opened={isOpen}
+        onClose={() => {
+          setEditingMember(null);
+          close();
+        }}
+        size="xl"
+      >
+        <ModifyMemberDrawer
+          isLoading={loadingAddMember}
+          dynasty={primaryDynasty}
+          member={editingMember}
+        />
       </Drawer>
       <Grid>
         <Grid.Col span={3}>
@@ -142,7 +154,13 @@ export const DynastiesDashboardContainer: FunctionComponent<
                   <ScrollArea sx={{ height: 300 }}>
                     {primaryDynasty.members?.map((member) => (
                       <List.Item key={member.id}>
-                        <PersonListItem label={getFullName(member)} />
+                        <PersonListItem
+                          label={getFullName(member)}
+                          onEditClick={() => {
+                            setEditingMember(member);
+                            show();
+                          }}
+                        />
                       </List.Item>
                     ))}
                   </ScrollArea>

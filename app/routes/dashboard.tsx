@@ -1,6 +1,11 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { ActionFunction, json, LoaderFunction, redirect } from "@remix-run/node";
+import {
+  ActionFunction,
+  json,
+  LoaderFunction,
+  redirect,
+} from "@remix-run/node";
 import {
   authorize,
   withSessionFromRequest,
@@ -13,7 +18,10 @@ import { Dynasty, Person } from "~/data-access/schemas";
 import { first, isEmpty } from "lodash";
 import { DynastiesDashboardContainer } from "~/features/dynasties-dashboard-feature";
 import { NoDynastiesDashboardContainer } from "~/features/no-dynasties-dashboard-feature";
-import { handleCreateMember } from "~/services/create-member.server";
+import {
+  handleCreateMember,
+  handleUpdateMember,
+} from "~/services/create-member.server";
 
 type LoaderData = {
   dynasties: Dynasty[];
@@ -47,8 +55,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { accessToken } = await authorize(request);
-  return handleCreateMember(request, accessToken);
-}
+  const url = new URL(request.url);
+
+  const personId = url.searchParams.get("personId");
+  return personId
+    ? handleUpdateMember(request, accessToken)
+    : handleCreateMember(request, accessToken);
+};
 
 const Dashboard: FunctionComponent = () => {
   const { dynasties, userMember, primaryDynasty } = useLoaderData<LoaderData>();

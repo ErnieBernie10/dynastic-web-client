@@ -6,10 +6,12 @@ import { IconEdit } from "@tabler/icons";
 interface PersonListItemProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string;
   image?: string | undefined;
+  // eslint-disable-next-line no-unused-vars
+  onEditClick: () => void;
 }
 
 const PersonListItem = forwardRef<HTMLDivElement, PersonListItemProps>(
-  ({ label, image, ...rest }, ref) => (
+  ({ label, image, onEditClick, ...rest }, ref) => (
     <Card p={8} m={0} ref={ref} {...rest}>
       <Group noWrap>
         <Avatar src={image} size="lg" />
@@ -25,7 +27,7 @@ const PersonListItem = forwardRef<HTMLDivElement, PersonListItemProps>(
             {label}
           </Text>
 
-          <ActionIcon>
+          <ActionIcon onClick={onEditClick}>
             <IconEdit />
           </ActionIcon>
         </Box>

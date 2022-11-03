@@ -1,1 +1,1 @@
-export * from "./containers/AddMemberForm";
+export * from "./containers/ModifyMemberDrawer";
