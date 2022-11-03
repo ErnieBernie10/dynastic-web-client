@@ -23,22 +23,22 @@ specifiers:
   '@types/lodash': ^4.14.187
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
-  '@typescript-eslint/eslint-plugin': ^5.42.0
-  '@typescript-eslint/parser': ^5.42.0
+  '@typescript-eslint/eslint-plugin': ^5.32.0
+  '@typescript-eslint/parser': ^5.32.0
   '@vercel/node': ^2.6.1
   auth0: ^2.44.0
-  autoprefixer: ^10.4.13
+  autoprefixer: ^10.4.8
   dayjs: ^1.11.6
   esbuild-plugin-svgr: ^1.0.1
-  eslint: ^8.26.0
+  eslint: ^7.32.0 || ^8.2.0
   eslint-config-airbnb: ^19.0.4
   eslint-config-prettier: ^8.5.0
-  eslint-import-resolver-typescript: ^3.5.2
-  eslint-plugin-import: ^2.26.0
-  eslint-plugin-jsx-a11y: ^6.6.1
+  eslint-import-resolver-typescript: ^3.4.0
+  eslint-plugin-import: ^2.25.3
+  eslint-plugin-jsx-a11y: ^6.5.1
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-react: ^7.31.10
-  eslint-plugin-react-hooks: ^4.6.0
+  eslint-plugin-react-hooks: ^4.3.0
   i18next: ^22.0.4
   i18next-browser-languagedetector: ^7.0.0
   i18next-fs-backend: ^2.0.0
@@ -6159,7 +6159,7 @@ packages:
       '@types/glob': 7.2.0
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.11
+      fast-glob: 3.2.12
       glob: 7.2.3
       ignore: 5.2.0
       merge2: 1.4.1
