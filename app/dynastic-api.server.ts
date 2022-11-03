@@ -286,13 +286,19 @@ export interface paths {
     put: {
       parameters: {
         path: {
-          id: number;
           dynastyId: string;
+          id: string;
         };
       };
       responses: {
         /** Success */
-        200: unknown;
+        200: {
+          content: {
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
+          };
+        };
         /** If Authorization header not present, has no value or no valid jwt bearer token */
         401: unknown;
         /** If user not authorized to perform requested action */
@@ -300,9 +306,9 @@ export interface paths {
       };
       requestBody: {
         content: {
-          "application/json": string;
-          "text/json": string;
-          "application/*+json": string;
+          "application/json": components["schemas"]["UpdatePersonBody"];
+          "text/json": components["schemas"]["UpdatePersonBody"];
+          "application/*+json": components["schemas"]["UpdatePersonBody"];
         };
       };
     };
@@ -320,6 +326,38 @@ export interface paths {
         401: unknown;
         /** If user not authorized to perform requested action */
         403: unknown;
+      };
+    };
+  };
+  "/api/Dynasty/{dynastyId}/Person/{id}/Picture": {
+    put: {
+      parameters: {
+        path: {
+          dynastyId: string;
+          id: string;
+        };
+      };
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "multipart/form-data": {
+            /** Format: binary */
+            Picture?: string;
+          };
+        };
       };
     };
   };
@@ -381,8 +419,8 @@ export interface components {
     };
     AddPersonToDynastyBody: {
       firstname: string;
-      middlename?: string | null;
-      lastname?: string | null;
+      middleName?: string | null;
+      lastname: string;
       /** Format: date-time */
       birthDate?: string | null;
       /** Format: uuid */
@@ -398,7 +436,7 @@ export interface components {
     };
     CompleteSignupCommand: {
       firstname?: string | null;
-      middlename?: string | null;
+      middleName?: string | null;
       lastname?: string | null;
       /** Format: date-time */
       birthDate?: string;
@@ -453,7 +491,7 @@ export interface components {
       /** Format: date-time */
       modifiedAt?: string;
       firstname?: string | null;
-      middlename?: string | null;
+      middleName?: string | null;
       lastname?: string | null;
       /** Format: uuid */
       motherId?: string | null;
@@ -475,10 +513,21 @@ export interface components {
       description?: string | null;
       motto?: string | null;
     };
+    UpdatePersonBody: {
+      firstname: string;
+      middleName?: string | null;
+      lastname: string;
+      /** Format: date-time */
+      birthDate?: string | null;
+      /** Format: uuid */
+      motherId?: string | null;
+      /** Format: uuid */
+      fatherId?: string | null;
+    };
     UserInfoDto: {
       userId?: string | null;
       firstname?: string | null;
-      middlename?: string | null;
+      middleName?: string | null;
       lastname?: string | null;
       /** Format: date-time */
       birthDate?: string;

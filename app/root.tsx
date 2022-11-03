@@ -78,7 +78,8 @@ export default function App() {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider
-        theme={theme(colorScheme)}
+        // TODO: Fix this shit
+        theme={theme("dark")}
         withGlobalStyles
         withNormalizeCSS
       >
