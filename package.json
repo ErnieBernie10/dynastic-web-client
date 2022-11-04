@@ -4,6 +4,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
+    "start": "remix-serve build",
     "openapi:generate": "NODE_TLS_REJECT_UNAUTHORIZED='0' npx openapi-typescript https://localhost:7256/swagger/v1/swagger.json --output app/dynastic-api.server.ts",
     "postinstall": "remix-esbuild-override",
     "lint": "eslint --ext .ts,.tsx --fix app/**/* packages/**/*"

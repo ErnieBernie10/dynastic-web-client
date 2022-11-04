@@ -65,10 +65,10 @@ export const handleBasicInfoStep = async (
   return null;
 };
 
-const uploadCoaSchema = z.object({
-  coa: z.instanceof(File),
-  configuration: z.string(),
-});
+// const uploadCoaSchema = z.object({
+//   coa: z.instanceof(File),
+//   configuration: z.string(),
+// });
 
 export const handleCoaStep = async (
   formData: FormData,
@@ -84,11 +84,12 @@ export const handleCoaStep = async (
     coa: formData.get("coa") as File,
     configuration: formData.get("configuration") as string,
   };
-  const validated = uploadCoaSchema.safeParse(formValues);
+  // const validated = uploadCoaSchema.safeParse(formValues);
+  const validated = { data: formValues };
 
-  if (!validated.success) {
-    throw json(validated.error.format());
-  }
+  // if (!validated.success) {
+  //   throw json(validated.error.format());
+  // }
 
   await uploadCoaFile(
     { id: existingDynastyId as string, Coa: validated.data.coa },
