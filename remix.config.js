@@ -31,4 +31,5 @@ module.exports = {
   // serverBuildPath: "api/index.js",
   // publicPath: "/build/",
   watchPaths: ["./packages/**/*"],
+  defaultPort: 8080
 };

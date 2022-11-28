@@ -44,6 +44,7 @@ specifiers:
   i18next-fs-backend: ^2.0.0
   i18next-http-backend: ^2.0.1
   lodash: ^4.17.21
+  mantine-dates-6: ^1.2.0
   openapi-typescript-fetch: ^1.1.3
   postcss: ^8.4.18
   prettier: ^2.7.1
@@ -81,6 +82,7 @@ dependencies:
   i18next-fs-backend: 2.0.0
   i18next-http-backend: 2.0.1
   lodash: 4.17.21
+  mantine-dates-6: 1.2.0_avzkpfrb6wh45hikg55f4rvbnm
   openapi-typescript-fetch: 1.1.3
   postcss: 8.4.18
   react: 18.2.0
@@ -7456,6 +7458,19 @@ packages:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
     dependencies:
       tmpl: 1.0.5
+    dev: false
+
+  /mantine-dates-6/1.2.0_avzkpfrb6wh45hikg55f4rvbnm:
+    resolution: {integrity: sha512-b1ibRN9xI7wC9FaFQ1wSSiFsSbn8Nv7eXFLhpVD0g6FIzA4xNPkelhLObnxgIbXFAkiGnWG7MfO8YXugrer1uA==}
+    peerDependencies:
+      '@emotion/react': '>=11.9.0'
+      '@mantine/core': '>=5.0.0'
+      '@mantine/hooks': '>=5.0.0'
+    dependencies:
+      '@emotion/react': 11.10.5_5ihuxrpe4zse4p4tf6ubxcyzuu
+      '@mantine/core': 5.6.4_dofnduuwep2xienneezhxbckna
+      '@mantine/hooks': 5.6.4_react@18.2.0
+      dayjs: 1.11.6
     dev: false
 
   /map-cache/0.2.2:

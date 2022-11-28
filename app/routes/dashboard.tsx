@@ -26,7 +26,7 @@ import {
 type LoaderData = {
   dynasties: Dynasty[];
   userMember: Person | undefined;
-  primaryDynasty: Dynasty;
+  primaryDynasty: Dynasty | undefined;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -46,9 +46,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   // TODO: Replace this with proper logic once we support multiple dynasties
-  const primaryDynasty = first(dynasties) as Dynasty;
+  const primaryDynasty = first(dynasties);
 
-  const userMember = primaryDynasty.members?.find((m) => m.owner === userId);
+  const userMember = primaryDynasty?.members?.find((m) => m.owner === userId);
 
   return json<LoaderData>({ dynasties, primaryDynasty, userMember });
 };
@@ -68,7 +68,7 @@ const Dashboard: FunctionComponent = () => {
 
   return (
     <MainLayout>
-      {!isEmpty(dynasties) ? (
+      {!isEmpty(dynasties) && primaryDynasty ? (
         <DynastiesDashboardContainer
           primaryDynasty={primaryDynasty}
           userMember={userMember}

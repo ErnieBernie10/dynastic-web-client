@@ -8,7 +8,7 @@ import { CompleteSignupFormFields } from "./formFields";
 const completeSignupSchema = z.object({
   [CompleteSignupFormFields.firstname]: z.string().trim().min(1),
   [CompleteSignupFormFields.lastname]: z.string().trim().min(1),
-  [CompleteSignupFormFields.middleName]: z.string().trim().nullable(),
+  [CompleteSignupFormFields.middleName]: z.string().trim().nullable().optional(),
   [CompleteSignupFormFields.birthDate]: z
     .string()
     .transform((dateString) => {

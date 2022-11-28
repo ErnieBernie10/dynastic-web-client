@@ -1,11 +1,8 @@
 import * as React from "react";
-import { Input, InputProps } from "@mantine/core";
-import { useActionData } from "@remix-run/react";
-import { ZodFormattedError } from "zod";
-import { FormErrors } from "~/components/FormErrors/FormErrors";
-import { DatePicker } from "@mantine/dates";
+import { DatePickerInputProps, DatePickerInput } from "mantine-dates-6";
+import { useFormErrorBehavior } from "~/util/hooks";
 
-interface FormDatePickerProps extends InputProps {
+interface FormDatePickerProps extends DatePickerInputProps {
   name: string;
   label: string;
   description?: string;
@@ -13,31 +10,19 @@ interface FormDatePickerProps extends InputProps {
 }
 
 export const FormDatePicker = ({
-  label,
-  description,
   name,
   defaultValue,
-  required,
+  onChange,
   ...rest
 }: FormDatePickerProps) => {
-  const data = useActionData<ZodFormattedError<Record<string, unknown>>>();
-  const error = data?.[name];
+  const props = useFormErrorBehavior(name, onChange);
 
   return (
-    <Input.Wrapper
-      label={label}
-      description={description}
-      required={required}
-      // eslint-disable-next-line no-underscore-dangle
-      error={<FormErrors errors={error?._errors as string[]} />}
-    >
-      <DatePicker
-        name={name}
-        defaultValue={defaultValue ?? undefined}
-        inputFormat="DD/MM/YYYY"
-        labelFormat="DD/MM/YYYY"
-        {...rest}
-      />
-    </Input.Wrapper>
+    <DatePickerInput
+      name={name}
+      defaultValue={defaultValue ?? undefined}
+      {...rest}
+      {...props}
+    />
   );
 };
