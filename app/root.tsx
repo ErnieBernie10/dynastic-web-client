@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -9,21 +9,16 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import {
-  ColorScheme,
-  ColorSchemeProvider, createEmotionCache,
-  MantineProvider,
-} from "@mantine/core";
+import { createEmotionCache, Text } from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
 import styles from "~/app.css";
-import { useColorScheme } from "@mantine/hooks";
 import { i18next } from "~/i18next.server";
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
-import { useChangeLanguage } from "remix-i18next";
 import { IS_CLIENT } from "~/constants";
-import { DrawerProvider } from "~/util/hooks";
-import { theme } from "./theme";
+import { MainLayout } from "~/layouts/MainLayout";
+import { RootProviders } from "~/RootProviders";
+import { useChangeLanguage } from "remix-i18next";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -31,15 +26,15 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-createEmotionCache({ key: 'mantine' });
+createEmotionCache({ key: "mantine" });
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
-type LoaderData = { locale: string };
+export type LocaleLoaderData = { locale: string };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const locale = await i18next.getLocale(request);
-  return json<LoaderData>({ locale });
+  return json<LocaleLoaderData>({ locale });
 };
 
 export const handle = {
@@ -56,17 +51,38 @@ if (!IS_CLIENT) {
   }
 }
 
-export default function App() {
-  // TODO: Store in cookie and add toggle
-  const preferredColorScheme = useColorScheme("dark");
-  const [colorScheme, setColorScheme] =
-    useState<ColorScheme>(preferredColorScheme);
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-  // Get the locale from the loader
-  const { locale } = useLoaderData<LoaderData>();
+export function ErrorBoundary({ error }: { error: Error }) {
+  const { message, trace } = JSON.parse(error.message);
+  return (
+    // TODO: Figure out how to do dynamic locale here
+    <html lang="en">
+      <head>
+        <StylesPlaceholder />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ScrollRestoration />
+        <RootProviders>
+          <MainLayout>
+            <div style={{ marginTop: 50 }}>
+              <Text size="xl">There was an error</Text>
+              <hr />
+              <p>{message}</p>
+              <p>{trace}</p>
+            </div>
+          </MainLayout>
+        </RootProviders>
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  );
+}
 
+export default function App() {
   const { i18n } = useTranslation();
+  const { locale } = useLoaderData<LocaleLoaderData>();
 
   // This hook will change the i18n instance language to the current locale
   // detected by the loader, this way, when we do something to change the
@@ -75,32 +91,20 @@ export default function App() {
   useChangeLanguage(locale);
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        // TODO: Fix this shit
-        theme={theme("dark")}
-        withGlobalStyles
-        withNormalizeCSS
-      >
-        <DrawerProvider>
-          <html lang={locale} dir={i18n.dir()}>
-            <head>
-              <StylesPlaceholder />
-              <Meta />
-              <Links />
-            </head>
-            <body>
-              <Outlet />
-              <ScrollRestoration />
-              <Scripts />
-              <LiveReload />
-            </body>
-          </html>
-        </DrawerProvider>
-      </MantineProvider>
-    </ColorSchemeProvider>
+    <html lang={locale} dir={i18n.dir()}>
+      <head>
+        <StylesPlaceholder />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <RootProviders>
+          <Outlet />
+        </RootProviders>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
   );
 }
