@@ -20,11 +20,14 @@ export const handleBasicInfoStep = async (
   formData: FormData,
   accessToken: string,
   existingDynastyId: string | undefined | null,
-  request: Request,
+  request: Request
 ) => {
   const t = await getValidationIntl(request);
   const createDynastySchema = z.object({
-    [CreateDynastyFormFields.name]: z.string().trim().min(1, { message: t("errors.min", { field: "Name"})}),
+    [CreateDynastyFormFields.name]: z
+      .string()
+      .trim()
+      .min(1, { message: t("errors.min", { field: "Name" }) }),
     [CreateDynastyFormFields.description]: z.string().trim().nullable(),
     [CreateDynastyFormFields.motto]: z.string().trim().nullable(),
   });
@@ -74,11 +77,9 @@ export const handleCoaStep = async (
   formData: FormData,
   accessToken: string,
   existingDynastyId: string | undefined | null,
-  // eslint-disable-next-line no-unused-vars
-  request: Request
 ) => {
   if (isNil(existingDynastyId)) {
-    return;
+    return null;
   }
   const formValues = {
     coa: formData.get("coa") as File,
@@ -91,15 +92,21 @@ export const handleCoaStep = async (
   //   throw json(validated.error.format());
   // }
 
-  await uploadCoaFile(
+  const responseUploadFile = await uploadCoaFile(
     { id: existingDynastyId as string, Coa: validated.data.coa },
     withToken(accessToken)
   );
-  await uploadCoaConfiguration(
+  const responseUploadConfiguration = await uploadCoaConfiguration(
     {
       coaConfiguration: JSON.parse(validated.data.configuration),
       id: existingDynastyId,
     },
     withToken(accessToken)
   );
+
+  if (!responseUploadFile || !responseUploadConfiguration.ok) {
+    throw json({ errors: ["request failed"] });
+  }
+
+  return null;
 };
