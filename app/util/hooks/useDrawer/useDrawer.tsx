@@ -1,4 +1,14 @@
-import { useContext } from "react";
-import { DrawerContext } from "~/util/hooks";
+import { useCallback, useState } from "react";
 
-export const useDrawer = () => useContext(DrawerContext);
+export const useDrawer = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const close = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+  const show = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  return { show, isOpen, close };
+};

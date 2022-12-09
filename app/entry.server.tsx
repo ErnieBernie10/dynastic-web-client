@@ -9,7 +9,6 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import Backend from "i18next-fs-backend";
 import i18n from "~/i18n";
 import { resolve } from "node:path";
-import { DrawerProvider } from "~/util/hooks";
 
 const server = createStylesServer();
 
@@ -41,9 +40,7 @@ export default async function handleRequest(
     });
   const markup = renderToString(
     <I18nextProvider i18n={instance}>
-      <DrawerProvider>
-        <RemixServer context={remixContext} url={request.url} />
-      </DrawerProvider>
+      <RemixServer context={remixContext} url={request.url} />
     </I18nextProvider>
   );
   responseHeaders.set("Content-Type", "text/html");

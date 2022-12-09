@@ -24,6 +24,7 @@ import { useDrawer } from "~/util/hooks";
 import { useLoading } from "~/util/hooks/useLoading";
 import { useTransitionEvent } from "~/util/hooks/useTransitionEvent";
 import { PersonListItem } from "~/components/PersonListItem";
+import { InviteToDynastyDrawer } from "~/features/invite-feature";
 
 interface DynastiesDashboardContainerProps {
   userMember: Person | undefined;
@@ -38,28 +39,53 @@ export const DynastiesDashboardContainer: FunctionComponent<
     { close: closeAddPopover, toggle: toggleAddPopover },
   ] = useDisclosure(false);
 
-  const { show, isOpen, close } = useDrawer();
+  const {
+    show: showModifyMember,
+    isOpen: isOpenModifyMember,
+    close: closeModifyMember,
+  } = useDrawer();
+  const {
+    show: showInvite,
+    isOpen: isOpenInvite,
+    close: closeInvite,
+  } = useDrawer();
   const [editingMember, setEditingMember] = useState<Person | null>(null);
 
-  const loadingAddMember = useLoading();
+  const isLoadingMutation = useLoading();
+
   useTransitionEvent({
-    onActionRedirect: () => close(),
+    onActionReload: () => {
+      closeModifyMember();
+      closeInvite();
+    },
   });
 
   return (
     <>
       <Drawer
-        opened={isOpen}
+        opened={isOpenModifyMember}
         onClose={() => {
           setEditingMember(null);
-          close();
+          closeModifyMember();
         }}
         size="xl"
       >
         <ModifyMemberDrawer
-          isLoading={loadingAddMember}
+          isLoading={isLoadingMutation}
           dynasty={primaryDynasty}
           member={editingMember}
+        />
+      </Drawer>
+      <Drawer
+        opened={isOpenInvite}
+        onClose={() => {
+          closeInvite();
+        }}
+        size="xl"
+      >
+        <InviteToDynastyDrawer
+          dynasty={primaryDynasty}
+          isLoading={isLoadingMutation}
         />
       </Drawer>
       <Grid>
@@ -116,7 +142,7 @@ export const DynastiesDashboardContainer: FunctionComponent<
                         description="Add a member without an account"
                         onClick={() => {
                           closeAddPopover();
-                          show();
+                          showModifyMember();
                         }}
                       />
                       <InfoButton
@@ -125,6 +151,10 @@ export const DynastiesDashboardContainer: FunctionComponent<
                         label="Invite"
                         description="Invite a user to join this dynasty"
                         variant="default"
+                        onClick={() => {
+                          closeAddPopover();
+                          showInvite();
+                        }}
                       >
                         Invite
                       </InfoButton>
@@ -158,7 +188,7 @@ export const DynastiesDashboardContainer: FunctionComponent<
                           label={getFullName(member)}
                           onEditClick={() => {
                             setEditingMember(member);
-                            show();
+                            showModifyMember();
                           }}
                         />
                       </List.Item>

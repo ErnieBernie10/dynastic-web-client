@@ -50,6 +50,31 @@ export interface paths {
       };
     };
   };
+  "/api/Dynasty/search": {
+    get: {
+      parameters: {
+        query: {
+          Page?: number;
+          PageSize?: number;
+          Search?: string;
+        };
+      };
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["DynastyBasicDtoPaginatedList"];
+            "application/json": components["schemas"]["DynastyBasicDtoPaginatedList"];
+            "text/json": components["schemas"]["DynastyBasicDtoPaginatedList"];
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+    };
+  };
   "/api/Dynasty/{Id}": {
     get: {
       parameters: {
@@ -70,6 +95,56 @@ export interface paths {
         401: unknown;
         /** If user not authorized to perform requested action */
         403: unknown;
+      };
+    };
+  };
+  "/api/Dynasty/Invite": {
+    post: {
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": boolean;
+            "application/json": boolean;
+            "text/json": boolean;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["InviteToDynastyCommand"];
+          "text/json": components["schemas"]["InviteToDynastyCommand"];
+          "application/*+json": components["schemas"]["InviteToDynastyCommand"];
+        };
+      };
+    };
+  };
+  "/api/Dynasty/RequestJoin": {
+    post: {
+      responses: {
+        /** Success */
+        200: {
+          content: {
+            "text/plain": boolean;
+            "application/json": boolean;
+            "text/json": boolean;
+          };
+        };
+        /** If Authorization header not present, has no value or no valid jwt bearer token */
+        401: unknown;
+        /** If user not authorized to perform requested action */
+        403: unknown;
+      };
+      requestBody: {
+        content: {
+          "application/json": components["schemas"]["JoinRequestCommand"];
+          "text/json": components["schemas"]["JoinRequestCommand"];
+          "application/*+json": components["schemas"]["JoinRequestCommand"];
+        };
       };
     };
   };
@@ -383,9 +458,9 @@ export interface paths {
         /** Success */
         200: {
           content: {
-            "text/plain": boolean;
-            "application/json": boolean;
-            "text/json": boolean;
+            "text/plain": string;
+            "application/json": string;
+            "text/json": string;
           };
         };
         /** If Authorization header not present, has no value or no valid jwt bearer token */
@@ -440,6 +515,7 @@ export interface components {
       lastname?: string | null;
       /** Format: date-time */
       birthDate?: string;
+      email?: string | null;
     };
     /**
      * Format: int32
@@ -463,6 +539,31 @@ export interface components {
       ownershipProperties?: components["schemas"]["DynastyOwnershipProperties"];
       coaConfiguration?: unknown | null;
     };
+    DynastyBasicDto: {
+      /** Format: uuid */
+      id?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      modifiedAt?: string;
+      name?: string | null;
+      description?: string | null;
+      motto?: string | null;
+      coaPath?: string | null;
+    };
+    DynastyBasicDtoPaginatedList: {
+      items?: components["schemas"]["DynastyBasicDto"][] | null;
+      /** Format: int32 */
+      pageNumber?: number;
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalCount?: number;
+      /** Format: int32 */
+      pageSize?: number;
+      hasPreviousPage?: boolean;
+      hasNextPage?: boolean;
+    };
     DynastyDto: {
       /** Format: uuid */
       id?: string;
@@ -473,16 +574,27 @@ export interface components {
       name?: string | null;
       description?: string | null;
       motto?: string | null;
+      coaPath?: string | null;
       members?: components["schemas"]["Person"][] | null;
       creationStep?: components["schemas"]["CreationStep"];
       isPrimary?: boolean;
-      coaPath?: string | null;
     };
     DynastyOwnershipProperties: {
       ownerUserId?: string | null;
       members?: string[] | null;
     };
     GetWeatherForecastsQuery: { [key: string]: unknown };
+    InviteToDynastyCommand: {
+      /** Format: uuid */
+      dynastyId?: string;
+      email?: string | null;
+      callback?: string | null;
+    };
+    JoinRequestCommand: {
+      /** Format: uuid */
+      dynastyId?: string;
+      callback?: string | null;
+    };
     Person: {
       /** Format: uuid */
       id?: string;

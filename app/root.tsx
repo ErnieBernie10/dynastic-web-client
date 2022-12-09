@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -52,7 +52,14 @@ if (!IS_CLIENT) {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  const { message, trace } = JSON.parse(error.message);
+  const { message, trace } = useMemo(() => {
+    try {
+      return JSON.parse(error.message);
+    } catch (e) {
+      return { error };
+    }
+  }, [error]);
+
   return (
     // TODO: Figure out how to do dynamic locale here
     <html lang="en">

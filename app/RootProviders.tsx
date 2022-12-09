@@ -7,13 +7,13 @@ import {
   useState,
 } from "react";
 import { theme } from "~/theme";
-import { DrawerProvider } from "~/util/hooks";
 import {
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
   useEmotionCache,
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 
 export interface ClientStyleContextData {
   reset: () => void;
@@ -54,7 +54,9 @@ export const RootProviders: FunctionComponent<PropsWithChildren> = ({
         withGlobalStyles
         withNormalizeCSS
       >
-        <DrawerProvider>{children}</DrawerProvider>
+        <NotificationsProvider autoClose={4000} position="bottom-left">
+          {children}
+        </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

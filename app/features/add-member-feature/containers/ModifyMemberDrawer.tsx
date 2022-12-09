@@ -82,7 +82,14 @@ export const ModifyMemberDrawer: FunctionComponent<ModifyMemberDrawerProps> = ({
           data={membersData}
           itemComponent={PersonListItem}
         />
-        <Button type="submit" color="primary" mt={8} loading={isLoading}>
+        <Button
+          type="submit"
+          color="primary"
+          mt={8}
+          loading={isLoading}
+          name="action"
+          value="add-member"
+        >
           {member ? "Update" : "Add"}
         </Button>
       </Form>

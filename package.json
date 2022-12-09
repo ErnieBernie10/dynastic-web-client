@@ -17,6 +17,7 @@
     "@mantine/dates": "^5.6.4",
     "@mantine/hooks": "^5.6.4",
     "@mantine/modals": "^5.6.4",
+    "@mantine/notifications": "^5.9.2",
     "@mantine/remix": "^5.6.4",
     "@mantine/utils": "^5.6.4",
     "@remix-run/node": "^1.7.4",

@@ -20,6 +20,11 @@ export const updateMember = fetcher
   .method("put")
   .create();
 
+export const inviteToDynasty = fetcher
+  .path("/api/Dynasty/Invite")
+  .method("post")
+  .create();
+
 // TODO: Figure out why this isn't working and revert the work around
 // fetcher
 //   .path("/api/Dynasty/{id}/UploadCoaFile")

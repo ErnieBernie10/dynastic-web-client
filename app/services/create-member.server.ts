@@ -1,12 +1,13 @@
-import { extractFormValues } from "~/util/fn";
+import { extractFormValues, getFullName } from "~/util/fn";
 import { CreateMemberFormFields } from "~/services/formFields";
 import { z } from "zod";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   addMember,
   updateMember,
 } from "~/data-access/dynasty/mutations.server";
 import { withSessionFromRequest, withToken } from "~/services/auth.server";
+import { toastResponse } from "~/util/fn/jsonResponse";
 
 const createMemberSchema = z.object({
   [CreateMemberFormFields.firstname]: z.string().trim().min(1),
@@ -31,7 +32,8 @@ const createMemberSchema = z.object({
 
 export const handleCreateMember = async (
   request: Request,
-  accessToken: string
+  accessToken: string,
+  formData: FormData
 ) => {
   const url = new URL(request.url);
 
@@ -41,7 +43,6 @@ export const handleCreateMember = async (
     throw new Error("DynastyId not set");
   }
 
-  const formData = await request.formData();
   const formValues = extractFormValues(formData, CreateMemberFormFields);
 
   const validated = createMemberSchema.safeParse(formValues);
@@ -56,7 +57,11 @@ export const handleCreateMember = async (
   );
 
   if (response.ok) {
-    return redirect("/dashboard", await withSessionFromRequest(request));
+    return toastResponse(
+      "success",
+      `Successfully created member ${getFullName(validated.data)}`,
+      await withSessionFromRequest(request)
+    );
   }
 
   throw new Error(response.statusText);
@@ -64,7 +69,8 @@ export const handleCreateMember = async (
 
 export const handleUpdateMember = async (
   request: Request,
-  accessToken: string
+  accessToken: string,
+  formData: FormData
 ) => {
   const url = new URL(request.url);
 
@@ -78,7 +84,6 @@ export const handleUpdateMember = async (
     throw new Error("PersonId not set");
   }
 
-  const formData = await request.formData();
   const formValues = extractFormValues(formData, CreateMemberFormFields);
 
   const validated = createMemberSchema.safeParse(formValues);
@@ -93,7 +98,11 @@ export const handleUpdateMember = async (
   );
 
   if (response.ok) {
-    return redirect("/dashboard", await withSessionFromRequest(request));
+    return toastResponse(
+      "success",
+      `Successfully updated member ${getFullName(validated.data)}`,
+      await withSessionFromRequest(request)
+    );
   }
 
   throw new Error(response.statusText);

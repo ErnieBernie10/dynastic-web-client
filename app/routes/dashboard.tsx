@@ -22,6 +22,7 @@ import {
   handleCreateMember,
   handleUpdateMember,
 } from "~/services/create-member.server";
+import { handleInviteMember } from "~/services/invite-member.server";
 
 type LoaderData = {
   dynasties: Dynasty[];
@@ -56,11 +57,20 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const { accessToken } = await authorize(request);
   const url = new URL(request.url);
+  const formData = await request.formData();
 
   const personId = url.searchParams.get("personId");
-  return personId
-    ? handleUpdateMember(request, accessToken)
-    : handleCreateMember(request, accessToken);
+
+  switch (formData.get("action")) {
+    case "add-member":
+      return personId
+        ? handleUpdateMember(request, accessToken, formData)
+        : handleCreateMember(request, accessToken, formData);
+    case "invite-member":
+      return handleInviteMember(request, accessToken, formData);
+    default:
+      throw json("Invalid action");
+  }
 };
 
 const Dashboard: FunctionComponent = () => {
