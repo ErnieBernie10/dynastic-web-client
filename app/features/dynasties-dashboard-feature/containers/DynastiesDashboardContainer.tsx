@@ -18,7 +18,6 @@ import { CoaSvg } from "~/components/CoaSvg/CoaSvg";
 import { getFullName } from "~/util/fn";
 import { IconUserPlus, IconUserSearch } from "@tabler/icons";
 import { InfoButton } from "@ui/common";
-import { useDisclosure } from "@mantine/hooks";
 import { ModifyMemberDrawer } from "~/features/add-member-feature";
 import { useDrawer } from "~/util/hooks";
 import { useLoading } from "~/util/hooks/useLoading";
@@ -34,11 +33,6 @@ interface DynastiesDashboardContainerProps {
 export const DynastiesDashboardContainer: FunctionComponent<
   DynastiesDashboardContainerProps
 > = ({ userMember, primaryDynasty }) => {
-  const [
-    isAddPopoverOpen,
-    { close: closeAddPopover, toggle: toggleAddPopover },
-  ] = useDisclosure(false);
-
   const {
     show: showModifyMember,
     isOpen: isOpenModifyMember,
@@ -111,7 +105,8 @@ export const DynastiesDashboardContainer: FunctionComponent<
                 <Popover
                   position="bottom"
                   shadow="md"
-                  opened={isAddPopoverOpen}
+                  closeOnClickOutside
+                  closeOnEscape
                   styles={{
                     dropdown: {
                       padding: "0",
@@ -120,12 +115,7 @@ export const DynastiesDashboardContainer: FunctionComponent<
                   }}
                 >
                   <Popover.Target>
-                    <Button
-                      leftIcon={<IconUserPlus />}
-                      onClick={toggleAddPopover}
-                    >
-                      Add
-                    </Button>
+                    <Button leftIcon={<IconUserPlus />}>Add</Button>
                   </Popover.Target>
                   <Popover.Dropdown>
                     <Button.Group
@@ -140,10 +130,7 @@ export const DynastiesDashboardContainer: FunctionComponent<
                         leftIcon={<IconUserPlus />}
                         label="Add member"
                         description="Add a member without an account"
-                        onClick={() => {
-                          closeAddPopover();
-                          showModifyMember();
-                        }}
+                        onClick={showModifyMember}
                       />
                       <InfoButton
                         width="150px"
@@ -151,10 +138,7 @@ export const DynastiesDashboardContainer: FunctionComponent<
                         label="Invite"
                         description="Invite a user to join this dynasty"
                         variant="default"
-                        onClick={() => {
-                          closeAddPopover();
-                          showInvite();
-                        }}
+                        onClick={showInvite}
                       >
                         Invite
                       </InfoButton>
