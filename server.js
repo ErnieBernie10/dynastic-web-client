@@ -1,4 +1,7 @@
-import { createRequestHandler } from "@remix-run/node";
-import * as build from "@remix-run/dev/server-build";
+import { createRequestHandler } from "@remix-run/vercel";
 
-export default createRequestHandler({ build, mode: process.env.NODE_ENV });
+export default createRequestHandler({
+  // eslint-disable-next-line global-require
+  build: require("./build"),
+  mode: process.env.NODE_ENV,
+});
